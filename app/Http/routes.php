@@ -119,4 +119,7 @@ Route::resource('/scheme','SchemeController');
 Route::resource('/activity','ActivityController');
 //Dealer billing email
 Route::resource('/billing','BillingController');
+////////////////////////////////////////////////////////////
+//gruop
+Route::resource('/group','GroupController');
 

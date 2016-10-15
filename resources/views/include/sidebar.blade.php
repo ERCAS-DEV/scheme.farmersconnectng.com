@@ -41,7 +41,7 @@
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">swap_calls</i>
-                            <span>ACL</span>
+                            <span>Access Control</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
@@ -66,16 +66,12 @@
                             <li>
                                 <a href="/farmers/create">Register Farmers</a>
                             </li>
-                            @level(4)
                             <li>
-                                <a href="/farmers">View Farmers</a>
+                                <a href="/crops">Add Crops/Livestock</a>
                             </li>
-                            @endlevel
-                            @role('worker|scheme')
                             <li>
                                 <a href="/schemefarmers">Scheme Farmers</a>
                             </li>
-                            @endrole
                             <li>
                                 <a href="/csv">Upload Farmers</a>
                             </li>
@@ -83,15 +79,10 @@
                             <li>
                                 <a href="/assign">Assign Farmers</a>
                             </li>
-                            @endlevel
-                            @level(3)
                             <li>
-                                <a href="/approvedfarmer">Assigned Farmer</a>
+                                <a href="/group">Group</a>
                             </li>
                             @endlevel
-                            <li>
-                                <a href="/crops">Add Crops/Livestock</a>
-                            </li>
                         </ul>
                     </li>
                      @endrole

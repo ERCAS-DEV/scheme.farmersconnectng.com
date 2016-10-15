@@ -49,6 +49,11 @@ class Scheme extends Model
         return $this->belongsToMany('App\Dealer');
     }
 
+    //Many to many reletionship with group
+        public function groups(){
+            return $this->belongsToMany('App\Group');
+        }
+
 //One to many relation with user model
     public function users()
     {
