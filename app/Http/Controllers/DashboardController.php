@@ -31,14 +31,14 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $user = Auth::user()->scheme_id;
-        $scheme = Scheme::find($user);
+        
+        $scheme = Scheme::where('id',Auth::user()->scheme_id)->with('farmers','groups','dealers','workers')->first();
         $dealers = Dealer::all();
         $farmers = Farmer::all();
         $workers = Worker::all();
         $groups = Group::all();
         $title = "Farmers Connect: Dashboard Page";
-    	return view('dashboard.index', compact('title','scheme','dealers','farmers','workers','groups'));
+    	return view('dashboard.index', compact('title','scheme'));
     }
 
     //create an admin test user
