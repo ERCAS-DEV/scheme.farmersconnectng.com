@@ -23,9 +23,9 @@ class WorkerController extends Controller
     public function __construct()
     {
 
-/*        $this->middleware('auth', ['except' => [
+        $this->middleware('auth', ['except' => [
              'create','store','emailConfirm'
-         ]]);*/
+         ]]);
 
     }
     /**

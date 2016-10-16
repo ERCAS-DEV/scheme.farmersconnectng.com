@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Scheme;
 use Auth;
-use App\Worker;
+use App\Farmer;
+use App\Scheme;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
 
-class AssignWorkerController extends Controller
+class farmerGroupController extends Controller
 {
+    //
     //
     public function __construct()
     {
@@ -20,7 +21,7 @@ class AssignWorkerController extends Controller
         $this->middleware('auth');
 
     }
-
+    //
     /**
      * Displays datatables front end view
      *
@@ -28,17 +29,11 @@ class AssignWorkerController extends Controller
      */
     public function getIndex()
     {
-        $scheme_id = Auth::user()->scheme_id;
-
-        if ( ! empty($scheme_id)) {
-            $schemes = Scheme::where('id',$scheme_id)->get();
-        }else{
-            $schemes = Scheme::all();
-        }
-        //$schemes = Scheme::all();
-        $scheme = Scheme::find($scheme_id);
-    	$title = "Farmers Connect: Workers Page";
-        return view('worker.assign',compact('title','schemes'));
+        //get scheme with all the group and farmers under group
+        $scheme = Scheme::where('id',Auth::user()->scheme_id)->with('groups.farmers')->first();
+       
+        $title = "Farmers Connect: Farmers Page";
+        return view('farmer.group',compact('title','scheme'));
     }
 
     /**
@@ -48,7 +43,7 @@ class AssignWorkerController extends Controller
      */
     public function anyData()
     {
-        return Datatables::of(Worker::where('status','active')->where('assign',0)->get())->addColumn('action', function ($id) {
+        return Datatables::of(Farmer::where('group',0))->addColumn('action', function ($id) {
             return '<input type="checkbox" name="box[]" value="'.$id->id.'" id="remember_me_'.$id->id.'">
                                         <label for="remember_me_'.$id->id.'"></label>'; 
         })->make(true);

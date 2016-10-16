@@ -33,4 +33,9 @@ class Farmer extends Model
     public function schemes(){
         return $this->belongsToMany('App\Scheme');
     }
+
+    //many to many relationship group
+        public function groups(){
+            return $this->belongsToMany('App\Group');
+        }
 }

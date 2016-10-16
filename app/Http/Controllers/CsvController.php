@@ -20,7 +20,7 @@ class CsvController extends Controller
     public function __construct()
     {
 
-        //$this->middleware('auth');
+        $this->middleware('auth');
 
     }
     
@@ -47,6 +47,10 @@ class CsvController extends Controller
                         $row = $row->toArray();
                         $row['key'] = str_random(20);
                         $farmer = Farmer::create($row);
+
+                        //attaching farmer to scheme
+                        $farmer->schemes()->attach(Auth::user()->scheme_id);
+                        $farmer->save();
                     /*    $crop = Crop::where('crop',$row['crop'])->first();
                         $farmer->crops()->attach($crop->id);
                         $farmer->save();*/

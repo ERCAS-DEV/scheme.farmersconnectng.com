@@ -23,7 +23,7 @@ class FarmerController extends Controller
     public function __construct()
     {
 
-        //$this->middleware('auth');
+        $this->middleware('auth');
 
     }
     /**
@@ -90,8 +90,15 @@ class FarmerController extends Controller
         $farmer = Farmer::create($request->all());
         //attaching crop to farmer
         if ($farmer) {
-         /*$farmer->crops()->attach($request->input('crop'));
-         $farmer->save();*/
+
+            //attaching farmer to scheme upon creating
+            $farmer->schemes()->attach($scheme->id);
+            $farmer->save();
+
+            //updating farmers assign colum
+            $farmer->assign = 1;
+            $farmer->save();
+
          Session::flash('message','Successful! You have created a farmer.');
          return view('farmer.card', compact('title','farmer','scheme'));  
         }

@@ -54,7 +54,7 @@
 										{{ucwords($group->group_name)}}
 									</td>
 									<td>
-										{{$scheme->name_of_scheme}}
+										{{ucwords($scheme->name_of_scheme)}}
 									</td>
 									<td>
 										{{count($group->farmers)}}

@@ -15,7 +15,7 @@
 		        <div class="card">
 		            <div class="header">
 		                <h2>
-		                    MY SCHEME FARMERS
+		                    MY SCHEME FARMERS <small>Farmers that belong to this scheme</small>
 		                </h2>
 		                <ul class="header-dropdown m-r--5">
 		                    <li class="dropdown">

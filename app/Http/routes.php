@@ -33,7 +33,13 @@ Route::controller('approvedfarmer', 'ApprovedFarmerController', [
     'anyData'  => 'approvedfarmer.data',
     'getIndex' => 'approvedfarmer',
 ]);
+
+Route::controller('farmers_grouping', 'FarmerGroupController', [
+    'anyData'  => 'farmers_grouping.data',
+    'getIndex' => 'farmers_grouping',
+]);
 Route::post('assign','DashboardController@assign');
+Route::post('farmers_grouping','DashboardController@farmers_grouping');
 //////////////////////////////////////////////////////////////////worker
 //Route worker datatable
 Route::controller('work', 'DataWorkerController', [

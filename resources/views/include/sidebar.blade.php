@@ -77,6 +77,9 @@
                             </li>
                             @level(2)
                             <li>
+                                <a href="/farmers_grouping">Farmers Grouping</a>
+                            </li>
+                            <li>
                                 <a href="/assign">Assign Farmers</a>
                             </li>
                             <li>

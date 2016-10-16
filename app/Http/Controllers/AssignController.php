@@ -17,7 +17,7 @@ class AssignController extends Controller
     public function __construct()
     {
 
-        //$this->middleware('auth');
+        $this->middleware('auth');
 
     }
     //
@@ -28,16 +28,10 @@ class AssignController extends Controller
      */
     public function getIndex()
     {
-        $scheme_id = Auth::user()->scheme_id;
-
-        if ( ! empty($scheme_id)) {
-            $schemes = Scheme::where('id',$scheme_id)->get();
-        }else{
-            $schemes = Scheme::all();
-        }
-        $scheme = Scheme::find($scheme_id);
+        //get scheme with all the group and farmers under group
+        $scheme = Scheme::where('id',Auth::user()->scheme_id)->with('groups.farmers')->first();
         $title = "Farmers Connect: Farmers Page";
-        return view('farmer.assign',compact('title','schemes','scheme'));
+        return view('farmer.assign',compact('title','scheme'));
     }
 
     /**

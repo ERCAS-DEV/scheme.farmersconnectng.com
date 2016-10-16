@@ -12,6 +12,7 @@ use Redirect;
 use App\Scheme;
 use App\Worker;
 use App\User;
+use App\Group;
 use App\Farmer;
 use App\Dealer;
 use App\Http\Requests;
@@ -21,9 +22,9 @@ class DashboardController extends Controller
 	public function __construct()
 	{
 
-	/*	$this->middleware('auth', ['except' => [
+		$this->middleware('auth', ['except' => [
 		     'logout','billing'
-		 ]]);*/
+		 ]]);
 
 	}
     //Display dashboard information
@@ -32,8 +33,12 @@ class DashboardController extends Controller
     {
         $user = Auth::user()->scheme_id;
         $scheme = Scheme::find($user);
+        $dealers = Dealer::all();
+        $farmers = Farmer::all();
+        $workers = Worker::all();
+        $groups = Group::all();
         $title = "Farmers Connect: Dashboard Page";
-    	return view('dashboard.index', compact('title','scheme'));
+    	return view('dashboard.index', compact('title','scheme','dealers','farmers','workers','groups'));
     }
 
     //create an admin test user
@@ -45,22 +50,65 @@ class DashboardController extends Controller
     	return Redirect::back();
     }
 
-    //assigning farmer to scheme
-    public function assign(Request $request)
+    //grouping scheme farmer
+    public function farmers_grouping(Request $request)
     {
-/*        echo "<pre>";
-        print_r($request->all());
-        die;*/
-        //select scheme
-        $scheme = Scheme::where('id',$request->input('scheme'))->first();
+
+        //checking if farmer is selected
         if (count($request->input('box')) < 1) {
             Session::flash('warning','Failed! Select farmers to assign');
             return Redirect::back();
         }
+
+        //check if group request is empty
+        if (!$request->input('group')) {
+            Session::flash('warning','Failed! Select Group ');
+            return Redirect::back();
+        }
+
+        //geting group details
+        if ($group = Group::find($request->input('group'))) {
+            $group->farmers()->attach($request->input('box'));
+            $group->save();
+
+            //updating farmers group coloum
+            foreach ($request->input('box') as $value) {
+                $farmer = Farmer::find($value);
+                $farmer->group = 1;
+                $farmer->save();
+            }
+            Session::flash('message','Successful! You have assaigned farmers to group');
+            return Redirect::back();
+        }
+
+        Session::flash('warning','Failed! Unable to assaign farmers to Group');
+        return Redirect::back();
+    }
+
+    //assigning farmer to scheme
+    public function assign(Request $request)
+    {
+
+        //select scheme
+        $scheme = Scheme::where('id',Auth::user()->scheme_id)->first();
+        if (count($request->input('box')) < 1) {
+            Session::flash('warning','Failed! Select farmers to assign');
+            return Redirect::back();
+        }
+
+        //check if group request is empty
+        if (!$request->input('group')) {
+            Session::flash('warning','Failed! Select Group ');
+            return Redirect::back();
+        }
+
+
         if ($scheme) {
+            //geting group details
+            $group = Group::find($request->input('group'));
 
             //checking if farmer has been assign to scheme already, if not attach farmer.
-            $this->check_farmer_scheme($request, $scheme);
+            $this->check_farmer_scheme($request, $scheme, $group);
 
             Session::flash('message','Successful! You have assaigned farmers to scheme');
             return Redirect::back();
@@ -219,7 +267,7 @@ class DashboardController extends Controller
     }
 
     //check if farmer is already assigned to scheme
-    private function check_farmer_scheme($request, $scheme)
+    private function check_farmer_scheme($request, $scheme, $group)
     {
         $scheme_array = array();
         $schemeArray = $scheme->farmers->toArray();
@@ -235,10 +283,19 @@ class DashboardController extends Controller
               $scheme->farmers()->attach($value);
               $scheme->save();
 
+              //attaching farmer to group
+              $group->farmers()->attach($value);
+              $group->save();
+
               //updating farmers assign colum
               $farmer = Farmer::find($value);
               $farmer->assign = 1;
               $farmer->save();
+
+              //updating farmers group coloum
+              $farmer->group = 1;
+              $farmer->save();
+
             }
         }
     }

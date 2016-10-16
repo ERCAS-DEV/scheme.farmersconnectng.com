@@ -11,7 +11,7 @@
 
 		<!-- Exportable Table -->
 		<div class="row clearfix">
-			<form action='assign' method='POST'>
+			<form action='farmers_grouping' method='POST'>
 		    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 		    	@include('include.warning')
 		    	@include('include.message')
@@ -19,7 +19,7 @@
 		        <div class="card">
 		            <div class="header">
 		                <h2>
-		                    ASSIGNING FARMERS <small>Add farmer to this scheme from list of Admin available farmers.</small>
+		                    GROUPING FARMERS <small>farmers that have not been assigned to group</small>
 		                </h2>
 		                <ul class="header-dropdown m-r--5">
 		                    <li class="dropdown">
@@ -62,7 +62,7 @@
 		    	<div class="card">
 		    		<div class="header">
 		    			<h2>
-		    				Select Group <small>You can mass assign Farmers to scheme</small>
+		    				Select Group <small>You can mass group farmer</small>
 		    			</h2>
 		    			<ul class="header-dropdown m-r--5">
 		    				<li>
@@ -115,7 +115,7 @@ $(function() {
    var table = $('#users-table1').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{!! route('assign.data') !!}',
+        ajax: '{!! route('farmers_grouping.data') !!}',
         columns: [
         	{data: 'action', name: 'action', orderable: false, searchable: false},
             { data: 'fullname', name: 'fullname' },

@@ -17,7 +17,7 @@
                     </div>
                     <div class="content">
                         <div class="text">SCHEME FARMERS</div>
-                        <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">125</div>
+                        <div class="number count-to" data-from="0" data-to="{{count($farmers)}}" data-speed="1000" data-fresh-interval="20">{{count($farmers)}}</div>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     </div>
                     <div class="content">
                         <div class="text">SCHEME WORKERS</div>
-                        <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">257</div>
+                        <div class="number count-to" data-from="0" data-to="{{count($workers)}}" data-speed="1000" data-fresh-interval="20">{{count($workers)}}</div>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="content">
                         <div class="text">SCHEME DEALERS</div>
-                        <div class="number count-to" data-from="0" data-to="1257" data-speed="1000" data-fresh-interval="20">257</div>
+                        <div class="number count-to" data-from="0" data-to="{{count($dealers)}}" data-speed="1000" data-fresh-interval="20">{{count($dealers)}}</div>
                     </div>
                 </div>
             </div>
@@ -49,8 +49,8 @@
                         <i class="material-icons">equalizer</i>
                     </div>
                     <div class="content">
-                        <div class="text">TOTAL REVENUE</div>
-                        <div class="number count-to" data-from="0" data-to="1257" data-speed="1000" data-fresh-interval="20">257</div>
+                        <div class="text">NO OF GROUPS</div>
+                        <div class="number count-to" data-from="0" data-to="{{count($groups)}}" data-speed="1000" data-fresh-interval="20">{{count($groups)}}</div>
                     </div>
                 </div>
             </div>
