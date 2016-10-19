@@ -36,9 +36,15 @@ class Worker extends Model
         'scheme_id'
     ];
 
-    //one to many relation with schem
-    public function scheme()
+    //one to many relation with scheme
+    public function schemes()
     {
-      return $this->belongsTo('App\Scheme');
+      return $this->belongsToMany('App\Scheme');
+    }
+
+    //one to many relation with group
+    public function groups()
+    {
+      return $this->belongsToMany('App\Group');
     }
 }

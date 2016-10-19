@@ -130,19 +130,25 @@ class DashboardController extends Controller
             return Redirect::back();
         }
 
-        $scheme = Scheme::where('id',$request->input('scheme'))->first();
+        $scheme = Scheme::where('id',$request->input('scheme'))->with('groups')->first();
         if ($scheme) {
-            # code...
+
             //attach worker
-            /*$scheme->workers()->attach($request->input('box'));
-            $scheme->save();*/
+            $scheme->workers()->attach($request->input('box'));
+            $scheme->save();
             foreach($request->input('box') as $value){
                 $worker = Worker::where('id',$value)->first();
 
+                //updating the assign parameter
                 $worker->update([
                     'assign'=>1,
                     'scheme_id'=>$scheme->id
                     ]);
+
+                //attaching worker to group
+                $group = Group::find($request->input('group'));
+                $group->workers()->attach($value);
+                $group->save();
             }
 
             Session::flash('message','Successful! You have assaigned workers to scheme');

@@ -65,7 +65,7 @@
 		    	<div class="card">
 		    		<div class="header">
 		    			<h2>
-		    				Select Scheme <small>You can mass assign work to scheme</small>
+		    				Select Scheme <small>You can mass assign work to scheme (group, worker and scheme)</small>
 		    			</h2>
 		    			<ul class="header-dropdown m-r--5">
 		    				<li>
@@ -88,13 +88,28 @@
 		    		<div class="body">
 		    			    <div class="form-group">
 		    			    	<select name='scheme' class="form-control show-tick">
-		    			    		@if($schemes->count() > 0)
+		    			    		@if($scheme)
 		    			    		<option >Select Scheme</option>
-		    			    		@foreach($schemes as $scheme)
 		    			    		<option value='{{$scheme->id}}'>{{$scheme->name_of_scheme}}</option>
-		    			    		@endforeach
 		    			    		@else
 		    			    	    <option >NO SCHEME</option>
+		    			    	    @endif
+		    			    	</select>
+		    			    </div>
+		    			    <br />
+		    			    <div class="form-group">
+		    			    	<select name='group' class="form-control show-tick">
+		    			    		<option value=''>Select Group</option>
+		    			    		@if($scheme->groups)
+		    			    			@foreach($scheme->groups as $group)
+		    			    	    <option value='{{$group->id}}'>{{ucwords($group->group_name)}} &nbsp;| &nbsp; ({{count($group->workers)}}) &nbsp; | &nbsp; 
+		    			    	    	@foreach($group->schemes as $value)
+		    			    	    	{{ucwords($value['name_of_scheme'])}}
+		    			    	    	@endforeach
+		    			    	    </option>
+		    			    	    	@endforeach
+		    			    	    @else
+		    			    	    <option value=''>No Group</option>
 		    			    	    @endif
 		    			    	</select>
 		    			    </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
+use App\Scheme;
 use App\Worker;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -42,7 +44,7 @@ class ApprovedWorkerController extends Controller
      */
     public function anyData()
     {
-    	$worker = Worker::with('scheme')->where('status','active')->where('assign',1)->get();
+    	$worker = Worker::with('schemes')->where('status','active')->where('assign',1)->get();
 
         return Datatables::of($worker)->addColumn('action', function ($id) {
             return '<a href="worker/' . $id->id . '" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>

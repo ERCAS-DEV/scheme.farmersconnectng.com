@@ -39,11 +39,14 @@ class Scheme extends Model
 /*    public function workers(){
         return $this->belongsToMany('App\Worker');
     }*/
-    public function workers()
+    public function worker()
     {
       return $this->hasMany('App\Worker');
     }
-
+    public function workers()
+    {
+      return $this->belongsToMany('App\Worker');
+    }
 //many to many relationship with dealer
     public function dealers(){
         return $this->belongsToMany('App\Dealer');

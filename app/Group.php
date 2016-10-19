@@ -21,4 +21,10 @@ class Group extends Model
     public function farmers(){
         return $this->belongsToMany('App\Farmer');
     }
+
+    //many to many relationship with workers
+    public function workers()
+    {
+      return $this->belongsToMany('App\Worker');
+    }
 }

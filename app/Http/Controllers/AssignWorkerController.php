@@ -28,17 +28,9 @@ class AssignWorkerController extends Controller
      */
     public function getIndex()
     {
-        $scheme_id = Auth::user()->scheme_id;
-
-        if ( ! empty($scheme_id)) {
-            $schemes = Scheme::where('id',$scheme_id)->get();
-        }else{
-            $schemes = Scheme::all();
-        }
-        //$schemes = Scheme::all();
-        $scheme = Scheme::find($scheme_id);
+        $scheme = Scheme::with('groups.workers')->find(Auth::user()->scheme_id);
     	$title = "Farmers Connect: Workers Page";
-        return view('worker.assign',compact('title','schemes'));
+        return view('worker.assign',compact('title','scheme'));
     }
 
     /**
