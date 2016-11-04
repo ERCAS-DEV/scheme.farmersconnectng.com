@@ -144,6 +144,12 @@ class DashboardController extends Controller
             foreach($request->input('box') as $value){
                 $worker = Worker::where('id',$value)->first();
 
+                //updating scheme id in users table
+                $user = User::where('email', $worker->email)->first();
+
+                $user->scheme_id = $scheme->id;
+                $user->save();
+
                 //updating the assign parameter
                 $worker->update([
                     'assign'=>1,
