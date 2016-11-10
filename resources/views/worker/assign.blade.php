@@ -86,16 +86,7 @@
 		    			</ul>
 		    		</div>
 		    		<div class="body">
-		    			    <div class="form-group">
-		    			    	<select name='scheme' class="form-control show-tick">
-		    			    		@if($scheme)
-		    			    		<option >Select Scheme</option>
-		    			    		<option value='{{$scheme->id}}'>{{$scheme->name_of_scheme}}</option>
-		    			    		@else
-		    			    	    <option >NO SCHEME</option>
-		    			    	    @endif
-		    			    	</select>
-		    			    </div>
+		    				<input type="hidden" name="scheme" value="{{$scheme->id}}">
 		    			    <br />
 		    			    <div class="form-group">
 		    			    	<select name='group' class="form-control show-tick">
