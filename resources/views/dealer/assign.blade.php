@@ -85,15 +85,21 @@
 		    			</ul>
 		    		</div>
 		    		<div class="body">
+		    				<input type="hidden" name="scheme" value="{{$scheme->id}}">
+		    				
 		    			    <div class="form-group">
-		    			    	<select name='scheme' class="form-control show-tick">
-		    			    		@if($schemes->count() > 0)
-		    			    		<option value=''>Select Scheme</option>
-		    			    			@foreach($schemes as $scheme)
-		    			    			<option value='{{$scheme->id}}'>{{$scheme->name_of_scheme}}</option>
-		    			    			@endforeach
-		    			    		@else
-		    			    	    <option value=''>NO SCHEME</option>
+		    			    	<select name='group' class="form-control show-tick">
+		    			    		<option value=''>Select Group</option>
+		    			    		@if($scheme->groups)
+		    			    			@foreach($scheme->groups as $group)
+		    			    	    <option value='{{$group->id}}'>{{ucwords($group->group_name)}} &nbsp;| &nbsp; ({{count($group->dealers)}}) &nbsp; | &nbsp; 
+		    			    	    	@foreach($group->schemes as $value)
+		    			    	    	{{ucwords($value['name_of_scheme'])}}
+		    			    	    	@endforeach
+		    			    	    </option>
+		    			    	    	@endforeach
+		    			    	    @else
+		    			    	    <option value=''>No Group</option>
 		    			    	    @endif
 		    			    	</select>
 		    			    </div>
@@ -101,9 +107,9 @@
 		    			    <div class="form-group">
 		    			    	<label>Select Activity</label>
 		    			    	<select name='activity[]' class="form-control show-tick" multiple>
-		    			    		@if($activities->count() > 0)
+		    			    		@if($scheme->activities->count() > 0)
 		    			    		<option >Select Activity</option>
-		    			    			@foreach($activities as $activity)
+		    			    			@foreach($scheme->activities as $activity)
 		    			    			<option value='{{$activity->id}}'>{{$activity->name}}</option>
 		    			    			@endforeach
 		    			    		@else
@@ -111,6 +117,8 @@
 		    			    	    @endif
 		    			    	</select>
 		    			    </div>
+
+
 		    			    <button type="submit" class="btn btn-warning pull-right waves-effect">ASSIGN SCHEME</button>
 		    			    <br />
 		    				

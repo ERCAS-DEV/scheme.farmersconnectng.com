@@ -31,18 +31,24 @@ class Dealer extends Model
     ];
 
     //many to many relationship with scheme
-        public function schemes(){
-            return $this->belongsToMany('App\Scheme');
-        }
+    public function schemes(){
+        return $this->belongsToMany('App\Scheme');
+    }
 
     //many to many relationship with activity
-        public function activities(){
-            return $this->belongsToMany('App\Activity');
-        }
+    public function activities(){
+        return $this->belongsToMany('App\Activity');
+    }
+
+
+        //many to many relationship with activity
+    public function groups(){
+        return $this->belongsToMany('App\Group');
+    }
 
     //one to many relation with billing
-        public function billings()
-        {
-          return $this->hasMany('App\Billing');
-        }
+    public function billings()
+    {
+      return $this->hasMany('App\Billing');
+  }
 }

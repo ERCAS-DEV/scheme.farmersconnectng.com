@@ -27,4 +27,10 @@ class Group extends Model
     {
       return $this->belongsToMany('App\Worker');
     }
+
+    //many to many relationship with workers
+    public function dealers()
+    {
+      return $this->belongsToMany('App\Dealer');
+    }
 }

@@ -185,7 +185,8 @@ class DealerController extends Controller
         $user = User::create([
             'name' => $request->input('name_of_company'),
             'email'=> $request->input('company_email'),
-            'password' => $password_hash
+            'password' => $password_hash,
+            'user'=> 4
             ]);
     //attaching role to user
         if ($user) {

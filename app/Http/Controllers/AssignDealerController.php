@@ -29,17 +29,10 @@ class AssignDealerController extends Controller
      */
     public function getIndex()
     {
-        $scheme_id = Auth::user()->scheme_id;
 
-        if ( ! empty($scheme_id)) {
-            $schemes = Scheme::where('id',$scheme_id)->get();
-        }else{
-            $schemes = Scheme::all();
-        }
-        $scheme = Scheme::find($scheme_id);
-    	$title = "Farmers Connect: Dealers Page";
-        $activities = Activity::all();
-        return view('dealer.assign',compact('title','schemes','activities','scheme'));
+        $scheme = Scheme::with('groups.dealers','activities')->find(Auth::user()->scheme_id);
+        $title = "Farmers Connect: Dealers Page";
+        return view('dealer.assign',compact('title','scheme'));
     }
 
     /**
@@ -51,7 +44,7 @@ class AssignDealerController extends Controller
     {
         return Datatables::of(Dealer::where('status','active')->where('assign',0)->get())->addColumn('action', function ($id) {
             return '<input type="checkbox" name="box[]" value="'.$id->id.'" id="remember_me_'.$id->id.'">
-                                        <label for="remember_me_'.$id->id.'"></label>'; 
+            <label for="remember_me_'.$id->id.'"></label>'; 
         })->make(true);
     }
 }
