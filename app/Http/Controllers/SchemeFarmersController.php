@@ -29,8 +29,8 @@ class SchemeFarmersController extends Controller
     */
    public function getIndex()
    {
-    $user = Auth::user()->scheme_id;
-    $scheme = Scheme::find($user);
+    
+    $scheme = Scheme::find(Auth::user()->scheme_id);
    	   $title = "Farmers Connect: Farmers Page";
        return view('farmer.scheme_farmer',compact('title','scheme'));
    }
@@ -46,7 +46,7 @@ class SchemeFarmersController extends Controller
        $farmers = Scheme::find($user)->farmers;
 
        return Datatables::of($farmers)->addColumn('action', function ($id) {
-           return '<a href="farmers/' . $id->id . '" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
+           return '<a href="/farmers/' . $id->key . '" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
            <button class="btn-delete btn btn-default" data-remote="/farmers/' . $id->id . '"><span class="glyphicon glyphicon-remove"></span></button>'; 
        })->make(true);
    }

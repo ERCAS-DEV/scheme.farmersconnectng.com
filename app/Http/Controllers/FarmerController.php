@@ -116,6 +116,7 @@ class FarmerController extends Controller
     public function show($id)
     {
         //
+
         $user = Auth::user()->scheme_id;
         $scheme = Scheme::find($user);
         $title = 'Farmers Connect: Farmer Details';
@@ -196,5 +197,19 @@ class FarmerController extends Controller
         }else{
             return FALSE;
         }
+    }
+
+    //Showing Farmers card id
+    public function card($id)
+    {
+       // check if the Farmer id exist
+       $farmer = Farmer::where('key',$id)->first();
+
+       if (!$farmer) {
+           return Redirect::back();
+       }
+       $scheme = Scheme::find(Auth::user()->scheme_id);
+       $title = "Farmers Connect: Farmers Page";
+       return view('farmer.card',compact('farmer','title','scheme'));
     }
 }

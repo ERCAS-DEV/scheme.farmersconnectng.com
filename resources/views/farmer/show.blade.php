@@ -92,15 +92,17 @@
 		                    
 		                    @endif
 		                </table>
-		                <span><a href='{{URL::to('/farmers')}}' class='btn btn-default'>BACK</a>|<a class='btn btn-default'>EDIT</a></span>
-		                <span class='pull-right'>
+		                    <br />
+		                <span ><a href='{{URL::to("/farmers")}}' class='btn btn-success'>BACK</a>|<a class='btn btn-warning'>EDIT</a>|<a href='{{URL::to("/farmers/card/$farmer->key")}}' class='btn btn-primary'>CARD</a></span>
+		                <span class="pull-right">
 		                	<form class="delete" action='/farmers/{{$farmer->id}}' method='POST'>
 		                		<input type="hidden" name="_method" value="DELETE">
 		                		<input type="hidden" name="_token" value="{{ csrf_token() }}">
-		                		<button type="submit" class="btn btn-default waves-effect">
+		                		<button type="submit" class="btn btn-orange waves-effect">
 		                		    DELETE</span>
 		                		</button>
 		                	</form>
+
 		                </span>
 		            </div>
 		        </div>

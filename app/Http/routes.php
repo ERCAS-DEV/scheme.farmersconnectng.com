@@ -98,6 +98,9 @@ Route::post('csv','CsvController@upload');
 Route::get('crops','CsvController@crop');
 Route::post('crops','CsvController@addCrop');
 Route::delete('crops/{any}','CsvController@deleteCrop');
+//////////////////////////////////////////////////Print CARD
+Route::get('/farmers/card/{any}','FarmerController@card');
+//////////////////////////////////////////////////////
 //workers email confirm
 Route::get('email/{token}/{id}/{email}',['as'=>'email','uses'=>'WorkerController@emailConfirm']);
 //Dealer email confirmation
