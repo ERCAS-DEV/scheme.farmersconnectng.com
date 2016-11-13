@@ -175,7 +175,7 @@ class FarmerController extends Controller
        }
 
        Session::flash('message','Successful! Record updated');
-       return Redirect::to('/farmers');
+       return Redirect::to('/schemefarmers');
     }
 
     /**
@@ -193,7 +193,7 @@ class FarmerController extends Controller
              $farmer->delete($id);
 
              Session::flash('message','Successful! You have deleted a Farmer');
-             return Redirect::to('/datatables');
+             return Redirect::to('/schemefarmers');
          }
          Session::flash('warning','Failed! Unable to delete Dealer');
          return Redirect::back();

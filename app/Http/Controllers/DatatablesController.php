@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Farmer;
+use Auth;
+use App\Scheme;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -25,8 +27,7 @@ class DatatablesController extends Controller
      */
     public function getIndex()
     {
-        $user = Auth::user()->scheme_id;
-        $scheme = Scheme::find($user);
+        $scheme = Scheme::find(Auth::user()->scheme_id);
     	$title = "Farmers Connect: Farmers Page";
         return view('farmer.index',compact('title','scheme'));
     }
