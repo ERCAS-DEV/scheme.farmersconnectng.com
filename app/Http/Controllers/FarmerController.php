@@ -48,8 +48,7 @@ class FarmerController extends Controller
     public function create()
     {
         //
-        $user = Auth::user()->scheme_id;
-        $scheme = Scheme::find($user);
+        $scheme = Scheme::find(Auth::user()->scheme_id);
         $title = "Farmers Connect: Farmers Page";
         $crops = Crop::all();
         return view('farmer.create',compact('title','crops','scheme'));
@@ -64,8 +63,7 @@ class FarmerController extends Controller
     public function store(FarmersRequest $request)
     {
         //dd($request->input('crop'));
-        $user = Auth::user()->scheme_id;
-        $scheme = Scheme::find($user);
+        $scheme = Scheme::find(Auth::user()->scheme_id);
             
         if ( ! $request->hasFile('file')) {
             //
@@ -117,8 +115,7 @@ class FarmerController extends Controller
     {
         //
 
-        $user = Auth::user()->scheme_id;
-        $scheme = Scheme::find($user);
+        $scheme = Scheme::find(Auth::user()->scheme_id);
         $title = 'Farmers Connect: Farmer Details';
         $farmer = Farmer::where('key',$id)->first();
         //dd($farmer);
@@ -138,8 +135,14 @@ class FarmerController extends Controller
     public function edit($id)
     {
         //
-        echo "edit method";
-        die;
+        $scheme = Scheme::find(Auth::user()->scheme_id);
+        $farmer = Farmer::where('key',$id)->first();
+        if (!$farmer) {
+            return Redirect::back();
+        }
+        $crops = Crop::all();
+        $title = 'Farmers Connect: Farmer Edit Page';
+        return view('farmer.edit',compact('farmer','title','scheme','crops'));
     }
 
     /**
@@ -149,11 +152,30 @@ class FarmerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FarmersRequest $request, $id)
     {
         //
-        echo "update method";
-        die;
+       
+       $scheme = Scheme::find(Auth::user()->scheme_id);
+
+       //check if the request has file
+       $farmer = Farmer::find($id);
+       if ($request->hasFile('file')) {
+
+           //deleting previous image
+            $this->imageUnlink($farmer);
+
+           $request['image'] = $this->image($request);
+       }
+       
+       //updating farmers records
+       if (! $farmer->update($request->all())) {
+           Session::flash('warning','Failed! Record not updated');
+           return Redirect::back();
+       }
+
+       Session::flash('message','Successful! Record updated');
+       return Redirect::to('/farmers');
     }
 
     /**
@@ -186,6 +208,14 @@ class FarmerController extends Controller
         $img = Image::make($image->getRealPath())->resize(150, 200)->save($destinationPath.'/'.$imgName);
 
         return $imgName;
+    }
+
+    //check if image exist
+    public function imageUnlink($farmer)
+    {
+        if (file_exists(public_path('/uploads/farmers/'.$farmer->image))) {
+            unlink(public_path('/uploads/farmers/'.$farmer->image));
+        }
     }
 
     //checking email

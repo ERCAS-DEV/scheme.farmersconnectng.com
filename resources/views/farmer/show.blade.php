@@ -93,7 +93,7 @@
 		                    @endif
 		                </table>
 		                    <br />
-		                <span ><a href='{{URL::to("/farmers")}}' class='btn btn-success'>BACK</a>|<a class='btn btn-warning'>EDIT</a>|<a href='{{URL::to("/farmers/card/$farmer->key")}}' class='btn btn-primary'>CARD</a></span>
+		                <span ><a href='{{URL::to("/farmers")}}' class='btn btn-success'>BACK</a>|<a href="/farmers/{{$farmer->key}}/edit" class='btn btn-warning'>EDIT</a>|<a href='{{URL::to("/farmers/card/$farmer->key")}}' class='btn btn-primary'>CARD</a></span>
 		                <span class="pull-right">
 		                	<form class="delete" action='/farmers/{{$farmer->id}}' method='POST'>
 		                		<input type="hidden" name="_method" value="DELETE">

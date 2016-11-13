@@ -12,6 +12,9 @@
 		<!-- Exportable Table -->
 		<div class="row clearfix">
 		    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		    @include('include.warning')
+		    @include('include.message')
+		    @include('include.error')
 		        <div class="card">
 		            <div class="header">
 		                <h2>
