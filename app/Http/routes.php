@@ -70,6 +70,10 @@ Route::controller('assigndealer', 'AssignDealerController', [
     'anyData'  => 'assigndealer.data',
     'getIndex' => 'assigndealer',
 ]);
+Route::controller('quotation', 'QuotationController', [
+    'anyData'  => 'quotation.data',
+    'getIndex' => 'quotation',
+]);
 Route::controller('approveddealer', 'ApprovedDealerController', [
     'anyData'  => 'approveddealer.data',
     'getIndex' => 'approveddealer',
@@ -80,8 +84,9 @@ Route::controller('schemedealer', 'SchemeDealerController', [
 ]);
 Route::post('action1','DealerController@action');
 //Dealer billing information
-Route::get('billing/{token}',['as'=>'billing','uses'=>'DashboardController@billing']);
+Route::get('billing/{token}/{any}/{morex}',['as'=>'billing','uses'=>'DashboardController@billing']);
 Route::post('assigndealer','DashboardController@assignDealer');
+Route::post('quotation','DashboardController@quotation');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////scheme
 //view scheme
 Route::controller('viewscheme', 'DataSchemeController', [

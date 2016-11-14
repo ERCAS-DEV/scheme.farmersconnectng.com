@@ -131,15 +131,33 @@
                                 <a href="/viewdealer">View Dealer</a>
                             </li>
                             @endlevel
-                            <li>
-                                <a href="/assigndealer">Assign Dealer</a>
-                            </li>
+
                             @level(3)
                             <li>
                                 <a href="/approveddealer">Approved Dealer</a>
                             </li>
                             @endlevel
+
                             @role('scheme')
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span>Quotation</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li>
+                                        <a href="/quotation">Send Quotation</a>
+                                    </li>
+                                  
+                                    <li>
+                                        <a href="#">View Quotation</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            
+                            <li>
+                                <a href="/assigndealer">Assign Dealer</a>
+                            </li>
                             <li>
                                 <a href="schemedealer">Scheme Dealers</a>
                             </li>

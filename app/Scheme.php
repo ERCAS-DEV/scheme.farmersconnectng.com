@@ -35,32 +35,40 @@ class Scheme extends Model
         return $this->belongsToMany('App\Farmer');
     }
 
-//many to many relationship with worker
-/*    public function workers(){
-        return $this->belongsToMany('App\Worker');
-    }*/
+
     public function worker()
     {
       return $this->hasMany('App\Worker');
-    }
-    public function workers()
-    {
+  }
+
+
+  public function workers()
+  {
       return $this->belongsToMany('App\Worker');
-    }
+  }
+
+
 //many to many relationship with dealer
-    public function dealers(){
-        return $this->belongsToMany('App\Dealer');
-    }
+  public function dealers(){
+    return $this->belongsToMany('App\Dealer');
+}
 
     //Many to many reletionship with group
-        public function groups(){
-            return $this->belongsToMany('App\Group');
-        }
+public function groups(){
+    return $this->belongsToMany('App\Group');
+}
 
 //One to many relation with user model
-    public function users()
-    {
-        return $this->hasMany('App\User');
-    }
+public function users()
+{
+    return $this->hasMany('App\User');
+}
+
+//One to many relationship with quotation
+public function quotation()
+{
+    return $this->hasMany('App\Quotation');
+}
+
 
 }
