@@ -371,7 +371,7 @@ public function assignWorker(Request $request)
         $farmer->save();
 
               //updating farmers group coloum
-        $farmer->group = 1;
+        $farmer->group_farmer = 1;
         $farmer->save();
 
       }
