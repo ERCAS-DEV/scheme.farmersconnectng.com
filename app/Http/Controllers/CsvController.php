@@ -51,6 +51,13 @@ class CsvController extends Controller
                         //attaching farmer to scheme
                         $farmer->schemes()->attach(Auth::user()->scheme_id);
                         $farmer->save();
+
+                        //updating farmer
+                        $farmer->assign = 1;
+                        $farmer->save();
+
+
+
                     /*    $crop = Crop::where('crop',$row['crop'])->first();
                         $farmer->crops()->attach($crop->id);
                         $farmer->save();*/
