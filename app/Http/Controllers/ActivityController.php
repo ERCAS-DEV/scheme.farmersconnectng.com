@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Session;
 use Redirect;
+use Auth;
+use App\Scheme;
 use App\Activity;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -28,7 +30,7 @@ class ActivityController extends Controller
     {
         //
         $user = Auth::user()->scheme_id;
-        $scheme = Scheme::find($user);
+        $scheme = Scheme::with('activities')->find($user);
         $activity = Activity::all();
         $title = "Farmers Connect: Activity Page";
         return view('activity.index',compact('title','activity','scheme'));
@@ -59,7 +61,13 @@ class ActivityController extends Controller
             return Redirect::back();
         }
         $request['key'] = str_random(20);
-        Activity::create($request->all());
+        $activity_1 = Activity::create($request->all());
+
+        //attaching activities
+        $scheme = Scheme::find(Auth::user()->scheme_id);
+        $scheme->activities()->attach($activity_1->id);
+        $scheme->save();
+
         Session::flash('message','Successful! You have add an activity');
         return Redirect::back();
     }

@@ -44,8 +44,8 @@
 							</thead>
 							<tbody>
 								<?php $i = 1;?>
-								@if($activity)
-									@foreach($activity as $activity)
+								@if($scheme->activities)
+									@foreach($scheme->activities as $activity)
 								<tr>
 									<th scope="row">{{$i}}</th>
 									<td>{{$activity->name}}</td>

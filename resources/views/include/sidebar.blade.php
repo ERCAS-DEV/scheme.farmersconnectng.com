@@ -75,6 +75,9 @@
                             <li>
                                 <a href="/csv">Upload Farmers</a>
                             </li>
+                            <li>
+                                <a href="/activity">Add Activity</a>
+                            </li>
                             @level(2)
                             <li>
                                 <a href="/farmers_grouping">Farmers Grouping</a>
