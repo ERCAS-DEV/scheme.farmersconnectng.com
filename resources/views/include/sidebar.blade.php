@@ -152,7 +152,7 @@
                                     </li>
                                   
                                     <li>
-                                        <a href="#">View Quotation</a>
+                                        <a href="/view_quotation">View Quotation</a>
                                     </li>
 
                                 </ul>

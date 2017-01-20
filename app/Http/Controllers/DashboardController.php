@@ -22,6 +22,8 @@ use App\Http\Requests;
 use App\Http\Requests\QuotationRequest;
 use App\Http\Requests\FeedbackRequest;
 
+use Yajra\Datatables\Datatables;
+
 class DashboardController extends Controller
 {
 	public function __construct()
@@ -275,34 +277,42 @@ public function assignWorker(Request $request)
         return view('billing.index');
       }
 
-    //getting dealers feedbacks
-/*      public function feedback(FeedbackRequest $request)
+    //displaying quotation page
+      public function view_quotation()
       {
 
-        //assign unique id
-        $request['feedback_key'] = str_random(20);
+        $scheme = Scheme::with("quotation")->find(Auth::user()->scheme_id);
+        $title = "Dealers Quotation";
 
-        //mass assign feedbacks 
-        $feedback = Feedback::create($request->all());
+        return view("dealer.view_quotation",compact("title","scheme"));
+      }
 
-        if ($feedback) {
-          //getting the particular quotation
-          $quote = Quotation::find($request->input("id"));
-          $dealer = Dealer::find($request->input("quote_id"));
+    //getting quotation data
+      public function postdata()
+      {
+        $scheme = Scheme::with("quotation.billings")->find(Auth::user()->scheme_id);
+        return Datatables::of($scheme->quotation)->addColumn('action', function ($id) {
+           return '<a href="/feedback/' . $id->key . '" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>'; 
+       })->addColumn('no',function($no){return count($no->billings);})->make(true);
+      }
 
-          //attach feedback to quotation
-          $quote->feedback()->save($feedback);
-
-          //attaching feedback to dealer
-          $dealer->feedback()->save($feedback);
-          
-          //redirct back with a success or fail messgae
-          Session::flash('message','Successful! Feedback sent ');
-          return Redirect::back();
-        }
-        Session::flash('warning','Failed! Unable to send feedback');
-        return Redirect::back();
+    //getting data list
+/*      public function view_feedback($id)
+      {
+         $scheme = Scheme::with("quotation.billings")->find(Auth::user()->scheme_id);
+         return Datatables::of($scheme->quotation)->addColumn('action', function ($id) {
+            return '<a href="/feedback/' . $id->key . '" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>'; 
+        })->addColumn('no',function($no){return count($no->billings);})->make(true);
       }*/
+
+    //getting quotion list of feedbacks
+      public function feedback($id)
+      {
+        $scheme = Scheme::with("quotation")->find(Auth::user()->scheme_id);
+        $title = "Dealers Quotation";
+        $id = $id;
+        return view("dealer.feedback",compact("title","scheme","id"));
+      }
 
     //logout from the system
       public function logout()
