@@ -44,7 +44,8 @@
   		            	<br />
   		            	<br />
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-  		                <input name="id" type="hidden" value='{{$dealer->id}}' />
+                      <input name="id" type="hidden" value='{{$dealer->id}}' />
+  		                <input name="quote_id" type="hidden" value='{{$quotation->id}}' />
                     <div class="form-group">
                         <label class="control-label">Unit Price</label>
                         <input maxlength="100" name="price" type="text" class="form-control" placeholder="Unit Price" />

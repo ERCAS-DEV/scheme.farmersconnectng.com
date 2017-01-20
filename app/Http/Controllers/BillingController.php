@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Dealer;
 use App\Billing;
+use App\Quotation;
 use Session;
 use Redirect;
 use App\Http\Requests;
@@ -60,10 +61,16 @@ class BillingController extends Controller
                 Session::flash('mistake','Error! You have submitted price brfore');
                 return Redirect::back();
             }
+
+            $request['billing_key'] = str_random(20);
+
+            //attaching feedback with dealer
             $billing = Billing::create($request->all());
             $dealer->billings()->save($billing);
-            $dealer->assign = 1;
-            $dealer->save();
+
+            //attaching feedback with quotation
+            $quote = Quotation::find($request->input("quote_id"));
+            $quote->billings()->save($billing);
             
             Session::flash('message','Price details received, will get intouch with you.');
             return Redirect::back();

@@ -50,5 +50,11 @@ class Dealer extends Model
     public function billings()
     {
       return $this->hasMany('App\Billing');
-  }
+    }
+
+    //one to many relationship with feedback
+    public function feedback()
+    {
+        return $this->hasMany('App\Feedback');
+    }
 }

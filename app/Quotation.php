@@ -20,4 +20,16 @@ class Quotation extends Model
     {
         return $this->belongsTo('App\Scheme');
     }
+
+    //one to many relationship with feedback
+    public function feedback()
+    {
+        return $this->hasMany('App\Feedback');
+    }
+
+    public function billings()
+    {
+        return $this->hasMany('App\Billing');
+    }
+
 }

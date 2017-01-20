@@ -17,8 +17,10 @@ use App\Group;
 use App\Farmer;
 use App\Dealer;
 use App\Quotation;
+use App\Feedback;
 use App\Http\Requests;
 use App\Http\Requests\QuotationRequest;
+use App\Http\Requests\FeedbackRequest;
 
 class DashboardController extends Controller
 {
@@ -272,6 +274,35 @@ public function assignWorker(Request $request)
         Session::flash('mistake','Error! 400 erorr occured');
         return view('billing.index');
       }
+
+    //getting dealers feedbacks
+/*      public function feedback(FeedbackRequest $request)
+      {
+
+        //assign unique id
+        $request['feedback_key'] = str_random(20);
+
+        //mass assign feedbacks 
+        $feedback = Feedback::create($request->all());
+
+        if ($feedback) {
+          //getting the particular quotation
+          $quote = Quotation::find($request->input("id"));
+          $dealer = Dealer::find($request->input("quote_id"));
+
+          //attach feedback to quotation
+          $quote->feedback()->save($feedback);
+
+          //attaching feedback to dealer
+          $dealer->feedback()->save($feedback);
+          
+          //redirct back with a success or fail messgae
+          Session::flash('message','Successful! Feedback sent ');
+          return Redirect::back();
+        }
+        Session::flash('warning','Failed! Unable to send feedback');
+        return Redirect::back();
+      }*/
 
     //logout from the system
       public function logout()
