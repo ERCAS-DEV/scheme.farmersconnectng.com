@@ -40,13 +40,11 @@
 							<table class="table table-bordered table-striped table-hover" id="users-table1">
 								<thead>
 									<tr>
-										<th>Activity</th>
-										<th>Quantity</th>
-										<th>Description</th>
-										<th>Payment Range</th>
-										<th>No of Feedbacks</th>
+										<th>Price</th>
+										<th>BVN</th>
+										<th>Account Number</th>
+										<th>Account Name</th>
 										<th>Action</th>
-
 									</tr>
 								</thead>
 							</table>
@@ -72,13 +70,12 @@
 		var table = $('#users-table1').DataTable({
 			processing: true,
 			serverSide: true,
-			ajax: '{!! URL('postdata') !!}',
+			ajax: '{!! URL('postdata/'.$id) !!}',
 			columns: [
-			{ data: 'activity', name: 'activity' },
-			{ data: 'quantity', name: 'quantity' },
-			{ data: 'description', name: 'description' },
-			{ data: 'payment_range', name: 'payment_range' },
-			{ data: 'no', name: 'no' },
+			{ data: 'price', name: 'price' },
+			{ data: 'bvn', name: 'bvn' },
+			{ data: 'account_number', name: 'account_number' },
+			{ data: 'account_name', name: 'account_name' },
 			{ data: 'action', name: 'action' },
 
 

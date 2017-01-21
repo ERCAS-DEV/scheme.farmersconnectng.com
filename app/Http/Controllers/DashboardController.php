@@ -297,19 +297,19 @@ public function assignWorker(Request $request)
       }
 
     //getting data list
-      public function postdata()
+      public function postdata($id)
       {
-         $scheme = Scheme::with("quotation.billings")->find(Auth::user()->scheme_id);
-         return Datatables::of($scheme->quotation)->addColumn('action', function ($id) {
-            return '<a href="/dealer_feedback/' . $id->key . '" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>'; 
-        })->addColumn('no',function($no){return count($no->billings);})->make(true);
+         $scheme = Quotation::with("billings")->where("key",$id)->first();
+         return Datatables::of($scheme->billings)->addColumn('action', function ($ida) {
+            return '<a href="/dealer_feedback/' . $ida->key . '" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>'; 
+        })->make(true);
       }
 
     //getting quotion list of feedbacks
       public function dealer_feedback($id)
       {
         $scheme = Scheme::with("quotation")->find(Auth::user()->scheme_id);
-        $title = "Dealers Quotation";
+        $title = "Dealers Feedbacks";
         $id = $id;
         return view("dealer.feedback",compact("title","scheme","id"));
       }

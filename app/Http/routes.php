@@ -84,10 +84,10 @@ Route::controller('schemedealer', 'SchemeDealerController', [
 ]);
 Route::post('action1','DealerController@action');
 //Dealer billing information
+Route::get("postdata/{any}","DashboardController@postdata");
 Route::get('/billing/{token}/{any}/{morex}',['as'=>'billing','uses'=>'DashboardController@billing']);
 Route::post('assigndealer','DashboardController@assignDealer');
 Route::post('quotation','DashboardController@quotation');
-Route::get("postdata","DashboardController@postdata");
 Route::get("/view_quotation","DashboardController@view_quotation");
 Route::get("postdata1","DashboardController@postdata1");
 Route::get("dealer_feedback/{token}","DashboardController@dealer_feedback");
