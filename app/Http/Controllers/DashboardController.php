@@ -17,6 +17,7 @@ use App\Group;
 use App\Farmer;
 use App\Dealer;
 use App\Quotation;
+use App\Billing;
 use App\Feedback;
 use App\Http\Requests;
 use App\Http\Requests\QuotationRequest;
@@ -301,7 +302,12 @@ public function assignWorker(Request $request)
       {
          $scheme = Quotation::with("billings")->where("key",$id)->first();
          return Datatables::of($scheme->billings)->addColumn('action', function ($ida) {
-            return '<a href="/dealer_feedback/' . $ida->key . '" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>'; 
+          if ($ida->status == 0) {
+            # code...
+            return '<a href="/accept_dealer/' . $ida->billing_key . '/'.$ida->dealer_id.'" class="btn btn-sm btn-warning" role="button">Accept</a>'; 
+          }else{
+            return '<a href="/decline_dealer/' . $ida->billing_key . '" class="btn btn-sm btn-info">Decline</a>';
+          }
         })->make(true);
       }
 
@@ -312,6 +318,48 @@ public function assignWorker(Request $request)
         $title = "Dealers Feedbacks";
         $id = $id;
         return view("dealer.feedback",compact("title","scheme","id"));
+      }
+
+    //accepting dealer feeback
+      public function accept_dealer($biller_key,$dealer_id)
+      {
+        //check if the feedback exist
+        $billing = Billing::where("billing_key",$biller_key)->first();
+        if ($billing) {
+          $billing->status = 1;
+          $billing->save();
+
+          //assigning dealer to scheme
+          $scheme = Scheme::find(Auth::user()->scheme_id);
+          $scheme->dealers()->attach($dealer_id);
+          $scheme->save();
+
+                 //updating farmers assign colum
+          $dealer = Dealer::find($dealer_id);
+          $dealer->assign = 1;
+          $dealer->save();
+
+          Session::flash('message','Successful! Feedback Accepted');
+          return Redirect::back();
+        }
+        Session::flash('warning','Failed! Unable to accept Feedback');
+        return Redirect::back();
+      }
+
+    //decline dealers feedback
+      public function decline_dealer($biller_key)
+      {
+        //checking if feedback exist
+        $billing = Billing::where("billing_key",$biller_key)->first();
+        if ($billing) {
+          $billing->status = 0;
+          $billing->save();
+
+          Session::flash('message','Successful! Feedback Declined');
+          return Redirect::back();
+        }
+        Session::flash('warning','Failed! Unable to decline feedback');
+        return Redirect::back();
       }
 
     //logout from the system
