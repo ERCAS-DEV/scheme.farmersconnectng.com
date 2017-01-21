@@ -37,25 +37,7 @@
                     </li>
 
                     
-                    @role('scheme')
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">swap_calls</i>
-                            <span>Access Control</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="#">User</a>
-                            </li>
-                            <li>
-                                <a href="#">Role</a>
-                            </li>
-                            <li>
-                                <a href="#">Permission</a>
-                            </li>
-                        </ul>
-                    </li>
-                    @endrole
+
                     @role('admin|superadmin|worker|scheme')
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
@@ -162,7 +144,7 @@
                                 <a href="/assigndealer">Assign Dealer</a>
                             </li> -->
                             <li>
-                                <a href="schemedealer">Scheme Dealers</a>
+                                <a href="/schemedealer">Scheme Dealers</a>
                             </li>
                             @endrole
                         </ul>
