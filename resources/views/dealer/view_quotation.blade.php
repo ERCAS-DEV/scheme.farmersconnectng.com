@@ -72,7 +72,7 @@
 		var table = $('#users-table1').DataTable({
 			processing: true,
 			serverSide: true,
-			ajax: '{!! URL('postdata') !!}',
+			ajax: '{!! URL('postdata1') !!}',
 			columns: [
 			{ data: 'activity', name: 'activity' },
 			{ data: 'quantity', name: 'quantity' },

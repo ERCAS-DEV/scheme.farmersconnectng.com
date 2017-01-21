@@ -87,10 +87,10 @@ Route::post('action1','DealerController@action');
 Route::get('/billing/{token}/{any}/{morex}',['as'=>'billing','uses'=>'DashboardController@billing']);
 Route::post('assigndealer','DashboardController@assignDealer');
 Route::post('quotation','DashboardController@quotation');
-Route::get("/view_quotation","DashboardController@view_quotation");
 Route::get("postdata","DashboardController@postdata");
-//Route::get("feedback/{token}","DashboardController@feedback");
-//Route::get("view_feedback/{token}","DashboardController@view_feedback");
+Route::get("/view_quotation","DashboardController@view_quotation");
+Route::get("postdata1","DashboardController@postdata1");
+Route::get("dealer_feedback/{token}","DashboardController@dealer_feedback");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////scheme
 //view scheme
 Route::controller('viewscheme', 'DataSchemeController', [
