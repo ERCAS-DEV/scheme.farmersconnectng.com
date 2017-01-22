@@ -85,6 +85,8 @@ Route::controller('schemedealer', 'SchemeDealerController', [
 Route::post('action1','DealerController@action');
 //Dealer billing information
 Route::get("postdata/{any}","DashboardController@postdata");
+Route::get("postdata2","DashboardController@postdata2");
+Route::get("postdata3","DashboardController@postdata3");
 Route::get("/accept_dealer/{any}/{more}","DashboardController@accept_dealer");
 Route::get("/decline_dealer/{any}","DashboardController@decline_dealer");
 Route::get('/billing/{token}/{any}/{morex}',['as'=>'billing','uses'=>'DashboardController@billing']);
@@ -99,6 +101,11 @@ Route::controller('viewscheme', 'DataSchemeController', [
     'anyData'  => 'viewscheme.data',
     'getIndex' => 'viewscheme',
 ]);
+
+////////////////////////////////////////////////////////////////////////////REPORT
+
+Route::get("invoice_report","InvoiceController@index");
+Route::get("receipt_report","InvoiceController@receipt");
 ////////////////////////////////////////////////////////////////////////////////
 //Display dashboard
 Route::get('admin/dashboard','DashboardController@index');

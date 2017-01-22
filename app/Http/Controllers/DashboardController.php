@@ -19,6 +19,8 @@ use App\Dealer;
 use App\Quotation;
 use App\Billing;
 use App\Feedback;
+use App\Invoice;
+use App\Receipt;
 use App\Http\Requests;
 use App\Http\Requests\QuotationRequest;
 use App\Http\Requests\FeedbackRequest;
@@ -310,6 +312,20 @@ public function assignWorker(Request $request)
           }
         })->make(true);
       }
+
+      //getting invoice list
+        public function postdata2()
+        {
+           $scheme = Scheme::find(Auth::user()->scheme_id);
+           return Datatables::of(Invoice::where("scheme_key",$scheme->key)->get())->make(true);
+        }
+
+        //getting receipt list
+          public function postdata3()
+          {
+             $scheme = Scheme::find(Auth::user()->scheme_id);
+             return Datatables::of(Receipt::where("scheme_key",$scheme->key)->get())->make(true);
+          }
 
     //getting quotion list of feedbacks
       public function dealer_feedback($id)

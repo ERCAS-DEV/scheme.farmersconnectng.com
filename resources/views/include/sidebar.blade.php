@@ -170,22 +170,7 @@
                         </ul>
                     </li>
                     @endrole
-                    @role('admin|superadmin|worker|dealer|scheme')
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">content_copy</i>
-                            <span>Payment</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="#">Invoicing</a>
-                            </li>
-                            <li>
-                                <a href="#">Genarate Invoice</a>
-                            </li>
-                        </ul>
-                    </li>
-                    @endrole
+ 
                     @role('admin|superadmin|worker|dealer|scheme')
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
@@ -194,28 +179,18 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="#">Genarate Report</a>
+                                <a href="/invoice_report">Invoicing</a>
                             </li>
+                            <li>
+                                <a href="/receipt_report">Genarate Report</a>
+                            </li>
+<!--                             <li>
+                                <a href="#">Worker Report</a>
+                            </li> -->
                         </ul>
                     </li>
                     @endrole
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">view_list</i>
-                            <span>Notification</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="#">Notify Farmers</a>
-                            </li>
-                            <li>
-                                <a href="#">Notify Workers</a>
-                            </li>
-                            <li>
-                                <a href="#">Notify Dealers</a>
-                            </li>
-                        </ul>
-                    </li>
+
                     <li>
                         <a href="/admin/logout">
                             <i class="material-icons">layers</i>
