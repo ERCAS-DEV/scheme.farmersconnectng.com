@@ -140,9 +140,9 @@
                                 </ul>
                             </li>
                             
-                      <!--       <li>
+                            <li>
                                 <a href="/assigndealer">Assign Dealer</a>
-                            </li> -->
+                            </li>
                             <li>
                                 <a href="/schemedealer">Scheme Dealers</a>
                             </li>

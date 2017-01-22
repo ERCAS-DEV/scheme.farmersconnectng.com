@@ -64,7 +64,7 @@
 		    	<div class="card">
 		    		<div class="header">
 		    			<h2>
-		    				Select Scheme <small>You can mass assign work to scheme</small>
+		    				Select Group <small>You can mass assign work to Group</small>
 		    			</h2>
 		    			<ul class="header-dropdown m-r--5">
 		    				<li>
@@ -119,7 +119,7 @@
 		    			    </div>
 
 
-		    			    <button type="submit" class="btn btn-warning pull-right waves-effect">ASSIGN SCHEME</button>
+		    			    <button type="submit" class="btn btn-warning pull-right waves-effect">ASSIGN GROUP</button>
 		    			    <br />
 		    				
 		    		</div>

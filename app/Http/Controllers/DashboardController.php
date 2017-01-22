@@ -205,7 +205,7 @@ public function assignWorker(Request $request)
           }
 
             //check if dealer has been assigned before, if no
-          $this->check_dealer_scheme($request, $scheme);
+          //$this->check_dealer_scheme($request, $scheme);
 
             //attach activity to dealer
           $this->attachActivity($request, $scheme);
@@ -323,21 +323,25 @@ public function assignWorker(Request $request)
     //accepting dealer feeback
       public function accept_dealer($biller_key,$dealer_id)
       {
-        //check if the feedback exist
+
+      //check if the feedback exist
         $billing = Billing::where("billing_key",$biller_key)->first();
         if ($billing) {
           $billing->status = 1;
           $billing->save();
 
-          //assigning dealer to scheme
-          $scheme = Scheme::find(Auth::user()->scheme_id);
-          $scheme->dealers()->attach($dealer_id);
-          $scheme->save();
-
-                 //updating farmers assign colum
+        //updating farmers assign colum
           $dealer = Dealer::find($dealer_id);
           $dealer->assign = 1;
           $dealer->save();
+
+          if (!$dealer->assign = 1) {
+
+            //assigning dealer to scheme
+            $scheme = Scheme::find(Auth::user()->scheme_id);
+            $scheme->dealers()->attach($dealer_id);
+            $scheme->save();
+          }
 
           Session::flash('message','Successful! Feedback Accepted');
           return Redirect::back();
@@ -399,20 +403,35 @@ public function assignWorker(Request $request)
     //attaching activity to each dealer
    private function attachActivity($request, $scheme)
    {
-
+    $group_id = array();
+    $activities_id = array();
     foreach ($request->input('box') as $value) {
-      $dealer = Dealer::find($value);
-      $dealer->activities()->attach($request->input('activity'));
-      $dealer->save();
+      $dealer = Dealer::with("groups","activities")->find($value);
+  
 
-      //updating dealers table
-      $dealer->assign = 1;
-      $dealer->save();
+      //checking dealer has the activity
+      foreach ($dealer->activities as $value) {
+        array_push($activities_id, $value['id']);
+      }
 
-      //attaching dealer to group
-      $group = Group::find($request->input('group'));
-      $group->dealers()->attach($value);
-      $group->save();
+      foreach ($request->input('activity') as $value) {
+        if (! in_array($value, $activities_id)) {
+          $dealer->activities()->attach($value);
+          $dealer->save();
+        }
+      }
+
+      //checking if dealer have been assign to group
+      foreach ($dealer->groups as $value) {
+        array_push($group_id, $value['id']);
+      }
+
+      if (! in_array($request->input('group'), $group_id)) {
+        //attaching dealer to group
+        $group = Group::find($request->input('group'));
+        $group->dealers()->attach($value);
+        $group->save();
+      }
 
       //updating dealers scheme id in user table
       $user = User::where('email',$dealer->company_email)->first();
