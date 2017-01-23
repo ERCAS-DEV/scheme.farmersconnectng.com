@@ -29,6 +29,10 @@ Route::controller('schemefarmers', 'SchemeFarmersController', [
     'anyData'  => 'schemefarmers.data',
     'getIndex' => 'schemefarmers',
 ]);
+Route::controller('groupfarmers', 'GroupFarmerController', [
+    'anyData'  => 'groupfarmers.data',
+    'getIndex' => 'groupfarmers',
+]);
 Route::controller('approvedfarmer', 'ApprovedFarmerController', [
     'anyData'  => 'approvedfarmer.data',
     'getIndex' => 'approvedfarmer',

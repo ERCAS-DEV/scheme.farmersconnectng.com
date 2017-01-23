@@ -51,9 +51,16 @@
                             <li>
                                 <a href="/crops">Add Crops/Livestock</a>
                             </li>
+                            @level(2)
                             <li>
                                 <a href="/schemefarmers">Scheme Farmers</a>
                             </li>
+                            @endlevel
+                            @role('admin|superadmin|worker|scheme')
+                            <li>
+                                <a href="/groupfarmers">Group Farmers</a>
+                            </li>
+                            @endrole
                             <li>
                                 <a href="/csv">Upload Farmers</a>
                             </li>
