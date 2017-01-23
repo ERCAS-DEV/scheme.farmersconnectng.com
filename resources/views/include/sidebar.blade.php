@@ -178,25 +178,32 @@
                     </li>
                     @endrole
  
-                    @role('admin|superadmin|worker|dealer|scheme')
+                   
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">swap_calls</i>
                             <span>Report</span>
                         </a>
                         <ul class="ml-menu">
+                         @role('scheme')
                             <li>
                                 <a href="/invoice_report">Invoicing</a>
                             </li>
                             <li>
                                 <a href="/receipt_report">Genarate Report</a>
                             </li>
+                        @endrole
+                         @role('worker')
+                            <li>
+                                <a href="/group_receipt">Group Report</a>
+                            </li>
+                        @endrole
 <!--                             <li>
                                 <a href="#">Worker Report</a>
                             </li> -->
                         </ul>
                     </li>
-                    @endrole
+                   
 
                     <li>
                         <a href="/admin/logout">

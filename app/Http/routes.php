@@ -91,12 +91,14 @@ Route::post('action1','DealerController@action');
 Route::get("postdata/{any}","DashboardController@postdata");
 Route::get("postdata2","DashboardController@postdata2");
 Route::get("postdata3","DashboardController@postdata3");
+Route::get("postdata4","InvoiceController@postdata4");
 Route::get("/accept_dealer/{any}/{more}","DashboardController@accept_dealer");
 Route::get("/decline_dealer/{any}","DashboardController@decline_dealer");
 Route::get('/billing/{token}/{any}/{morex}',['as'=>'billing','uses'=>'DashboardController@billing']);
 Route::post('assigndealer','DashboardController@assignDealer');
 Route::post('quotation','DashboardController@quotation');
 Route::get("/view_quotation","DashboardController@view_quotation");
+Route::get("/group_receipt","InvoiceController@group_receipt");
 Route::get("postdata1","DashboardController@postdata1");
 Route::get("dealer_feedback/{token}","DashboardController@dealer_feedback");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////scheme
