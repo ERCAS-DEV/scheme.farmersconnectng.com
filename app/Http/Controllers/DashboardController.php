@@ -56,6 +56,33 @@ class DashboardController extends Controller
 
   }
 
+  //Showing workers and dealer dashboard
+  public function client_dashboard()
+  {
+
+    if (Auth::user()->scheme_id) {
+     switch (Auth::user()->user) {
+       case '3':
+         //worker logining
+        $scheme = Scheme::where('id',Auth::user()->scheme_id)->first();
+          $worker = Worker::where("email",Auth::user()->email)->with("groups")->first();
+
+          if ($worker) {
+            $group = Group::with("farmers","workers","dealers")->find($worker->groups[0]['id']);
+            $title = "Farmers Connect: Dashboard Page";
+            return view('dashboard.worker', compact('title','group','worker','scheme'));
+          }
+         break;
+       default:
+         //dealer login
+       echo "dealer login";
+         break;
+     }
+    }else{
+      return Redirect::to('admin/logout');
+    }
+  }
+
     //create an admin test user
   public function user(Request $request)
   {

@@ -109,6 +109,8 @@ Route::get("receipt_report","InvoiceController@receipt");
 ////////////////////////////////////////////////////////////////////////////////
 //Display dashboard
 Route::get('admin/dashboard','DashboardController@index');
+Route::get('admin/client_dashboard','DashboardController@client_dashboard');
+
 //Logout from the systems
 Route::get('admin/logout','DashboardController@logout');
 Route::get('csv','CsvController@csv');

@@ -60,8 +60,7 @@ class AdminController extends Controller
     {
         //
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-/*            print_r(Auth::user()->Roles[0]['name']);
-            die;*/
+
             if (Auth::user()->status ==='pending' ) {
                 Session::flash('warning', 'Account not activated');           
                 return Redirect::to('admin/logout');
@@ -70,11 +69,16 @@ class AdminController extends Controller
                 Session::flash('warning', 'Account not activated');           
                 return Redirect::to('admin/logout');
             }
-/*            if (Auth::user()->scheme_id ===NULL) {
-               Session::flash('warning', 'Account not activated');           
-               return Redirect::to('admin/logout');
-            }*/
-            return redirect()->intended('admin/dashboard');
+
+            //checking user is worker or dealer
+            if (Auth::user()->level() == 1) {
+
+                return redirect()->intended('admin/client_dashboard');
+            }else{
+
+                return redirect()->intended('admin/dashboard');
+            }
+
         } else {
             Session::flash('warning', 'Invalid login credentials');           
             return Redirect::back();
