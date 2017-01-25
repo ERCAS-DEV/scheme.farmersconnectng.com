@@ -56,7 +56,7 @@
                                 <a href="/schemefarmers">Scheme Farmers</a>
                             </li>
                             @endlevel
-                            @role('admin|superadmin|worker|scheme')
+                            @role('worker')
                             <li>
                                 <a href="/groupfarmers">Group Farmers</a>
                             </li>
