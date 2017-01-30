@@ -45,7 +45,7 @@
 		                        	</th>
 		                        	<th>Full Name</th>
 		                        	<th>State</th>
-		                        	<th>Phone</th>
+		                        	<th>Village</th>
 		                        	<th>Crop</th>
 		                        	
 		                        </tr>
@@ -120,7 +120,7 @@ $(function() {
         	{data: 'action', name: 'action', orderable: false, searchable: false},
             { data: 'fullname', name: 'fullname' },
             { data: 'state', name: 'state' },
-            { data: 'phone', name: 'phone' },
+            { data: 'village', name: 'village' },
             { data: 'crop', name: 'crop' },
 
             

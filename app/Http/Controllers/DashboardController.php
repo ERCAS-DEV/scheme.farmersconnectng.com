@@ -64,37 +64,37 @@ class DashboardController extends Controller
      switch (Auth::user()->user) {
        case '3':
          //worker logining
-        $scheme = Scheme::where('id',Auth::user()->scheme_id)->first();
-          $worker = Worker::where("email",Auth::user()->email)->with("groups")->first();
+       $scheme = Scheme::where('id',Auth::user()->scheme_id)->first();
+       $worker = Worker::where("email",Auth::user()->email)->with("groups")->first();
 
-          if ($worker) {
-            $group = Group::with("farmers","workers","dealers")->find($worker->groups[0]['id']);
-            $title = "Farmers Connect: Dashboard Page";
-            return view('dashboard.worker', compact('title','group','worker','scheme'));
-          }
-         break;
-       default:
+       if ($worker) {
+        $group = Group::with("farmers","workers","dealers")->find($worker->groups[0]['id']);
+        $title = "Farmers Connect: Dashboard Page";
+        return view('dashboard.worker', compact('title','group','worker','scheme'));
+      }
+      break;
+      default:
          //dealer login
-       echo "dealer login";
-         break;
-     }
-    }else{
-      return Redirect::to('admin/logout');
+      echo "dealer login";
+      break;
     }
+  }else{
+    return Redirect::to('admin/logout');
   }
+}
 
     //create an admin test user
-  public function user(Request $request)
-  {
-   $request['password'] = Hash::make($request['password']);
-   $register = User::create($request->all());
-   Session::flash('message', 'You have sucessfully created an account. Please login to continue');
-   return Redirect::back();
- }
+public function user(Request $request)
+{
+ $request['password'] = Hash::make($request['password']);
+ $register = User::create($request->all());
+ Session::flash('message', 'You have sucessfully created an account. Please login to continue');
+ return Redirect::back();
+}
 
     //grouping scheme farmer
- public function farmers_grouping(Request $request)
- {
+public function farmers_grouping(Request $request)
+{
 
         //checking if farmer is selected
   if (count($request->input('box')) < 1) {
@@ -110,13 +110,19 @@ class DashboardController extends Controller
 
         //geting group details
   if ($group = Group::find($request->input('group'))) {
-    $group->farmers()->attach($request->input('box'));
-    $group->save();
+    foreach ($request->input('box') as $value) {
+      $farmer_id = Farmer::find($value);
+      if (!$farmer_id->groups == 1) {
+        $group->farmers()->attach($value);
+        $group->save();
+      }
+    }
+    
 
             //updating farmers group coloum
     foreach ($request->input('box') as $value) {
       $farmer = Farmer::find($value);
-      $farmer->group = 1;
+      $farmer->groups = 1;
       $farmer->save();
     }
     Session::flash('message','Successful! You have assaigned farmers to group');
@@ -322,237 +328,237 @@ public function assignWorker(Request $request)
       {
         $scheme = Scheme::with("quotation.billings")->find(Auth::user()->scheme_id);
         return Datatables::of($scheme->quotation)->addColumn('action', function ($id) {
-           return '<a href="/dealer_feedback/' . $id->key . '" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>'; 
+         return '<a href="/dealer_feedback/' . $id->key . '" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>'; 
        })->addColumn('no',function($no){return count($no->billings);})->make(true);
       }
 
     //getting data list
       public function postdata($id)
       {
-         $scheme = Quotation::with("billings")->where("key",$id)->first();
-         return Datatables::of($scheme->billings)->addColumn('action', function ($ida) {
-          if ($ida->status == 0) {
+       $scheme = Quotation::with("billings")->where("key",$id)->first();
+       return Datatables::of($scheme->billings)->addColumn('action', function ($ida) {
+        if ($ida->status == 0) {
             # code...
-            return '<a href="/accept_dealer/' . $ida->billing_key . '/'.$ida->dealer_id.'" class="btn btn-sm btn-warning" role="button">Accept</a>'; 
-          }else{
-            return '<a href="/decline_dealer/' . $ida->billing_key . '" class="btn btn-sm btn-info">Decline</a>';
-          }
-        })->make(true);
-      }
+          return '<a href="/accept_dealer/' . $ida->billing_key . '/'.$ida->dealer_id.'" class="btn btn-sm btn-warning" role="button">Accept</a>'; 
+        }else{
+          return '<a href="/decline_dealer/' . $ida->billing_key . '" class="btn btn-sm btn-info">Decline</a>';
+        }
+      })->make(true);
+     }
 
       //getting invoice list
-        public function postdata2()
-        {
-           $scheme = Scheme::find(Auth::user()->scheme_id);
-           return Datatables::of(Invoice::where("scheme_key",$scheme->key)->get())->make(true);
-        }
+     public function postdata2()
+     {
+       $scheme = Scheme::find(Auth::user()->scheme_id);
+       return Datatables::of(Invoice::where("scheme_key",$scheme->key)->get())->make(true);
+     }
 
         //getting receipt list
-          public function postdata3()
-          {
-             $scheme = Scheme::find(Auth::user()->scheme_id);
-             return Datatables::of(Receipt::where("scheme_key",$scheme->key)->get())->make(true);
-          }
+     public function postdata3()
+     {
+       $scheme = Scheme::find(Auth::user()->scheme_id);
+       return Datatables::of(Receipt::where("scheme_key",$scheme->key)->get())->make(true);
+     }
 
     //getting quotion list of feedbacks
-      public function dealer_feedback($id)
-      {
-        $scheme = Scheme::with("quotation")->find(Auth::user()->scheme_id);
-        $title = "Dealers Feedbacks";
-        $id = $id;
-        return view("dealer.feedback",compact("title","scheme","id"));
-      }
+     public function dealer_feedback($id)
+     {
+      $scheme = Scheme::with("quotation")->find(Auth::user()->scheme_id);
+      $title = "Dealers Feedbacks";
+      $id = $id;
+      return view("dealer.feedback",compact("title","scheme","id"));
+    }
 
     //accepting dealer feeback
-      public function accept_dealer($biller_key,$dealer_id)
-      {
+    public function accept_dealer($biller_key,$dealer_id)
+    {
 
       //check if the feedback exist
-        $billing = Billing::where("billing_key",$biller_key)->first();
-        if ($billing) {
-          $billing->status = 1;
-          $billing->save();
+      $billing = Billing::where("billing_key",$biller_key)->first();
+      if ($billing) {
+        $billing->status = 1;
+        $billing->save();
 
         //updating farmers assign colum
-          $dealer = Dealer::find($dealer_id);
-          $dealer->assign = 1;
-          $dealer->save();
+        $dealer = Dealer::find($dealer_id);
+        $dealer->assign = 1;
+        $dealer->save();
 
-          if (!$dealer->assign = 1) {
+        if (!$dealer->assign = 1) {
 
             //assigning dealer to scheme
-            $scheme = Scheme::find(Auth::user()->scheme_id);
-            $scheme->dealers()->attach($dealer_id);
-            $scheme->save();
-          }
-
-          Session::flash('message','Successful! Feedback Accepted');
-          return Redirect::back();
+          $scheme = Scheme::find(Auth::user()->scheme_id);
+          $scheme->dealers()->attach($dealer_id);
+          $scheme->save();
         }
-        Session::flash('warning','Failed! Unable to accept Feedback');
+
+        Session::flash('message','Successful! Feedback Accepted');
         return Redirect::back();
       }
+      Session::flash('warning','Failed! Unable to accept Feedback');
+      return Redirect::back();
+    }
 
     //decline dealers feedback
-      public function decline_dealer($biller_key)
-      {
+    public function decline_dealer($biller_key)
+    {
         //checking if feedback exist
-        $billing = Billing::where("billing_key",$biller_key)->first();
-        if ($billing) {
-          $billing->status = 0;
-          $billing->save();
+      $billing = Billing::where("billing_key",$biller_key)->first();
+      if ($billing) {
+        $billing->status = 0;
+        $billing->save();
 
-          Session::flash('message','Successful! Feedback Declined');
-          return Redirect::back();
-        }
-        Session::flash('warning','Failed! Unable to decline feedback');
+        Session::flash('message','Successful! Feedback Declined');
         return Redirect::back();
       }
+      Session::flash('warning','Failed! Unable to decline feedback');
+      return Redirect::back();
+    }
 
     //logout from the system
-      public function logout()
-      {
-       if (Auth::check()) {
-         Auth::logout();
-         return redirect('/admin');
-       } else {
-         return redirect('/admin');
-       }
+    public function logout()
+    {
+     if (Auth::check()) {
+       Auth::logout();
+       return redirect('/admin');
+     } else {
+       return redirect('/admin');
      }
-
-    //checking if activity is equal to scheme activity
-     private function checkActivity($scheme, $request)
-     {
-
-      $scheme_activity = array();
-      $activities = $scheme->activities->toArray();
-
-      foreach ($activities as $value) {
-
-            //$scheme_activity[] = $value['id'];
-        array_push($scheme_activity, $value['id']);
-      }
-
-      foreach($request->input('activity') as $check){
-
-        if (in_array($check, $scheme_activity)) {
-
-         return true;
-       }
-     }
-     return false;
    }
 
-    //attaching activity to each dealer
-   private function attachActivity($request, $scheme)
+    //checking if activity is equal to scheme activity
+   private function checkActivity($scheme, $request)
    {
-    $group_id = array();
-    $activities_id = array();
-    foreach ($request->input('box') as $value) {
-      $dealer = Dealer::with("groups","activities")->find($value);
-  
+
+    $scheme_activity = array();
+    $activities = $scheme->activities->toArray();
+
+    foreach ($activities as $value) {
+
+            //$scheme_activity[] = $value['id'];
+      array_push($scheme_activity, $value['id']);
+    }
+
+    foreach($request->input('activity') as $check){
+
+      if (in_array($check, $scheme_activity)) {
+
+       return true;
+     }
+   }
+   return false;
+ }
+
+    //attaching activity to each dealer
+ private function attachActivity($request, $scheme)
+ {
+  $group_id = array();
+  $activities_id = array();
+  foreach ($request->input('box') as $value) {
+    $dealer = Dealer::with("groups","activities")->find($value);
+    
 
       //checking dealer has the activity
-      foreach ($dealer->activities as $value) {
-        array_push($activities_id, $value['id']);
-      }
+    foreach ($dealer->activities as $value) {
+      array_push($activities_id, $value['id']);
+    }
 
-      foreach ($request->input('activity') as $value) {
-        if (! in_array($value, $activities_id)) {
-          $dealer->activities()->attach($value);
-          $dealer->save();
-        }
+    foreach ($request->input('activity') as $value) {
+      if (! in_array($value, $activities_id)) {
+        $dealer->activities()->attach($value);
+        $dealer->save();
       }
+    }
 
       //checking if dealer have been assign to group
-      foreach ($dealer->groups as $value) {
-        array_push($group_id, $value['id']);
-      }
+    foreach ($dealer->groups as $value) {
+      array_push($group_id, $value['id']);
+    }
 
-      if (! in_array($request->input('group'), $group_id)) {
+    if (! in_array($request->input('group'), $group_id)) {
         //attaching dealer to group
-        $group = Group::find($request->input('group'));
-        $group->dealers()->attach($value);
-        $group->save();
-      }
+      $group = Group::find($request->input('group'));
+      $group->dealers()->attach($value);
+      $group->save();
+    }
 
       //updating dealers scheme id in user table
-      $user = User::where('email',$dealer->company_email)->first();
-      $user->scheme_id = $request->input('scheme');
-      $user->save();
+    $user = User::where('email',$dealer->company_email)->first();
+    $user->scheme_id = $request->input('scheme');
+    $user->save();
 
 
      //send billing email to dealer
      // $this->sendMail($dealer, $scheme);
-    }
   }
+}
 
     //send email to worker
-  private function sendMail($register, $scheme, $param) {
-    Mail::send('email.billing', ['dealer' => $register, 'scheme'=>$scheme, 'param'=>$param], function ($m) use ($register) {
-      $m->from('oparannabueze@gmail.com', 'Farmers Connect Product Enquiry');
-      $m->to($register->company_email, $register->name_of_company)->subject('Farmers Connect Product Enquiry!');
-    });
-  }
+private function sendMail($register, $scheme, $param) {
+  Mail::send('email.billing', ['dealer' => $register, 'scheme'=>$scheme, 'param'=>$param], function ($m) use ($register) {
+    $m->from('oparannabueze@gmail.com', 'Farmers Connect Product Enquiry');
+    $m->to($register->company_email, $register->name_of_company)->subject('Farmers Connect Product Enquiry!');
+  });
+}
 
     //check if farmer is already assigned to scheme
-  private function check_farmer_scheme($request, $scheme, $group)
-  {
-    $scheme_array = array();
-    $schemeArray = $scheme->farmers->toArray();
+private function check_farmer_scheme($request, $scheme, $group)
+{
+  $scheme_array = array();
+  $schemeArray = $scheme->farmers->toArray();
 
-    foreach ($schemeArray  as $value) {
+  foreach ($schemeArray  as $value) {
 
             //$scheme_activity[] = $value['id'];
-      array_push($scheme_array, $value['id']);
-    }
-    foreach ($request->input('box') as $value) {
+    array_push($scheme_array, $value['id']);
+  }
+  foreach ($request->input('box') as $value) {
 
-      if ( ! in_array($value, $scheme_array)) {
-        $scheme->farmers()->attach($value);
-        $scheme->save();
+    if ( ! in_array($value, $scheme_array)) {
+      $scheme->farmers()->attach($value);
+      $scheme->save();
 
               //attaching farmer to group
-        $group->farmers()->attach($value);
-        $group->save();
+      $group->farmers()->attach($value);
+      $group->save();
 
               //updating farmers assign colum
-        $farmer = Farmer::find($value);
-        $farmer->assign = 1;
-        $farmer->save();
+      $farmer = Farmer::find($value);
+      $farmer->assign = 1;
+      $farmer->save();
 
               //updating farmers group coloum
-        $farmer->group_farmer = 1;
-        $farmer->save();
+      $farmer->group_farmer = 1;
+      $farmer->save();
 
-      }
     }
   }
+}
 
     //check if dealer is already assigned to scheme
-  private function check_dealer_scheme($request, $scheme)
-  {
-    $scheme_array = array();
-    $schemeArray = $scheme->dealers->toArray();
+private function check_dealer_scheme($request, $scheme)
+{
+  $scheme_array = array();
+  $schemeArray = $scheme->dealers->toArray();
 
-    foreach ($schemeArray  as $value) {
+  foreach ($schemeArray  as $value) {
 
             //$scheme_activity[] = $value['id'];
-      array_push($scheme_array, $value['id']);
-    }
-    foreach ($request->input('box') as $value) {
+    array_push($scheme_array, $value['id']);
+  }
+  foreach ($request->input('box') as $value) {
 
-      if ( ! in_array($value, $scheme_array)) {
+    if ( ! in_array($value, $scheme_array)) {
 
                  //attach dealer
-       $scheme->dealers()->attach($value);
-       $scheme->save();
+     $scheme->dealers()->attach($value);
+     $scheme->save();
 
               //updating farmers assign colum
-       $dealer = Dealer::find($value);
-       $dealer->assign = 1;
-       $dealer->save();
-     }
+     $dealer = Dealer::find($value);
+     $dealer->assign = 1;
+     $dealer->save();
    }
  }
+}
 }
