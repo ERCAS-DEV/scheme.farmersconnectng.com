@@ -15,6 +15,8 @@ class CreateFarmersMigration extends Migration
         Schema::create('farmers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('key');
+            $table->integer('scheme_id')->unsigned()->index();
+            $table->foreign('scheme_id')->references('id')->on('schemes')->onDelete('cascade');
             $table->string('fullname');
             $table->enum('gender', ['m', 'f']);
             $table->string('email');

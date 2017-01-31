@@ -525,10 +525,11 @@ private function check_farmer_scheme($request, $scheme, $group)
               //updating farmers assign colum
       $farmer = Farmer::find($value);
       $farmer->assign = 1;
+      $farmer->scheme_id = Auth::user()->scheme_id;
       $farmer->save();
 
               //updating farmers group coloum
-      $farmer->group_farmer = 1;
+      $farmer->groups = 1;
       $farmer->save();
 
     }

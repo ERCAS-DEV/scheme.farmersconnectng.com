@@ -43,8 +43,7 @@ class farmerGroupController extends Controller
      */
     public function anyData()
     {
-        $scheme = Scheme::where('id',Auth::user()->scheme_id)->with('farmers')->first();
-        return Datatables::of($scheme->farmers)->addColumn('action', function ($id) {
+        return Datatables::of(Farmer::where('scheme_id',Auth::user()->scheme_id)->where('groups',0)->get())->addColumn('action', function ($id) {
             return '<input type="checkbox" name="box[]" value="'.$id->id.'" id="remember_me_'.$id->id.'">
                                         <label for="remember_me_'.$id->id.'"></label>'; 
         })->make(true);

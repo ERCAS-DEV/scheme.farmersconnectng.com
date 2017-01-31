@@ -95,6 +95,7 @@ class FarmerController extends Controller
 
             //updating farmers assign colum
             $farmer->assign = 1;
+            $farmer->scheme_id = Auth::user()->scheme_id;
             $farmer->save();
 
          Session::flash('message','Successful! You have created a farmer.');

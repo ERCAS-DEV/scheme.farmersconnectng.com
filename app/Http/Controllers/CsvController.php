@@ -53,6 +53,7 @@ class CsvController extends Controller
                         $farmer->save();
 
                         //updating farmer
+                        $farmer->scheme_id = Auth::user()->scheme_id;
                         $farmer->assign = 1;
                         $farmer->save();
 
