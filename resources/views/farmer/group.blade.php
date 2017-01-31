@@ -84,7 +84,7 @@
 		    		</div>
 		    		<div class="body">
 		    			<div class="form-group">
-		    				<select name='group' class="form-control show-tick">
+		    				<select name='group' class="form-control show-tick selectpicker" data-live-search="true">
 		    					<option value=''>Select Group</option>
 		    					@if($scheme->groups)
 		    						@foreach($scheme->groups as $group)
