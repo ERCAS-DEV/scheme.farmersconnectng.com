@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Scheme;
 use App\Worker;
 use App\Invoice;
+use App\Dealer;
 Use Auth;
 
 use Yajra\Datatables\Datatables;
@@ -39,11 +40,26 @@ class InvoiceController extends Controller
         return view("invoice.group_invoice",compact("scheme","title"));
     }
 
+    //displaying dealer report
+    public function dealer_receipt()
+    {
+        $scheme = Scheme::find(Auth::user()->scheme_id);
+        $title = "Invoice Report page";
+        return view("invoice.dealer_invoice",compact("scheme","title"));
+    }
+
     //getting the group invoice
     public function postdata4()
     {
         $worker = Worker::where("email",Auth::user()->email)->first();
         return Datatables::of(Invoice::where("worker_key",$worker->key)->get())->make(true);
+    }
+
+    //getting the dealer invoice
+    public function postdata5()
+    {
+        $dealer = Dealer::where("company_email",Auth::user()->email)->first();
+        return Datatables::of(Invoice::where("dealer_key",$dealer->key)->get())->make(true);
     }
 
 }

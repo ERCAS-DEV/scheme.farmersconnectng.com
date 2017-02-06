@@ -195,7 +195,12 @@
                         @endrole
                          @role('worker')
                             <li>
-                                <a href="/group_receipt">Group Report</a>
+                                <a href="/group_receipt">Generate Report</a>
+                            </li>
+                        @endrole
+                         @role('dealer')
+                            <li>
+                                <a href="/dealer_receipt">Generate Report</a>
                             </li>
                         @endrole
 <!--                             <li>

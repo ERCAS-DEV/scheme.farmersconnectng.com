@@ -75,7 +75,16 @@ class DashboardController extends Controller
       break;
       default:
          //dealer login
-      echo "dealer login";
+      $scheme = Scheme::where('id',Auth::user()->scheme_id)->first();
+      $dealer = Dealer::where("company_email",Auth::user()->email)->with("groups")->first();
+
+      if ($dealer) {
+       $group = Group::with("farmers","workers","dealers")->find($dealer->groups[0]['id']);
+       $title = "Farmers Connect: Dashboard Page";
+       return view('dashboard.dealer', compact('title','group','dealer','scheme'));
+      }
+     /* print_r($dealer->groups[0]['id']);
+      die;*/
       break;
     }
   }else{
