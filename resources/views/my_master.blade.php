@@ -20,7 +20,6 @@
 		</div>		
 	</div>
 	@include('partials._footer')
-	@include('partials._tiles')
 	@include('partials._scripts')
 
 </body>

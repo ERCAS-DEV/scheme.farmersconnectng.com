@@ -26,34 +26,34 @@
 
             <ul>
                 <li class="active">
-                    <a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i>Dashboard</a>  
+                    <a href="/admin/dashboard" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i>Dashboard</a>  
                 </li>
                 <li class="top-menu-invisible">
                     <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">Farmers</span></a>
                     <ul>
                         <li class="">
-                            <a href="layouts.html" title="Dashboard"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Register Farmers</span></a>
+                            <a href="/farmers/create"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Register Farmers</span></a>
                         </li>
                         <li class="">
-                            <a href="skins.html" title="Dashboard"><i class="fa fa-lg fa-fw fa-picture-o"></i> <span class="menu-item-parent">Add Crops/Livestock</span></a>
+                            <a href="/crops"><i class="fa fa-lg fa-fw fa-picture-o"></i> <span class="menu-item-parent">Add Crops/Livestock</span></a>
                         </li>
                         <li>
-                            <a href="applayout.html"><i class="fa fa-cube"></i>Scheme Farmers</a>
+                            <a href="/schemefarmers"><i class="fa fa-cube"></i>Scheme Farmers</a>
                         </li>
                         <li>
-                            <a href="applayout.html"><i class="fa fa-cube"></i>Upload Farmers</a>
+                            <a href="/csv"><i class="fa fa-cube"></i>Upload Farmers</a>
                         </li>
                         <li>
-                            <a href="applayout.html"><i class="fa fa-cube"></i>Add Activity</a>
+                            <a href="/activity"><i class="fa fa-cube"></i>Add Activity</a>
                         </li>
                         <li>
-                            <a href="applayout.html"><i class="fa fa-cube"></i>Farmers Grouping</a>
+                            <a href="/farmers_grouping"><i class="fa fa-cube"></i>Farmers Grouping</a>
                         </li>
                         <li>
-                            <a href="applayout.html"><i class="fa fa-cube"></i>Assign Farmers</a>
+                            <a href="/assign"><i class="fa fa-cube"></i>Assign Farmers</a>
                         </li>
                         <li>
-                            <a href="applayout.html"><i class="fa fa-cube"></i>Group</a>
+                            <a href="/group"><i class="fa fa-cube"></i>Group</a>
                         </li>
                     </ul>
                 </li>

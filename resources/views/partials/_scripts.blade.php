@@ -1,5 +1,3 @@
-<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
-<script data-pace-options='{ "restartOnRequestAfter": true }' src="/theme/js/plugin/pace/pace.min.js"></script>
 
 <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -61,15 +59,12 @@ if (!window.jQuery.ui) {
 
         <![endif]-->
 
-        <!-- Demo purpose only -->
-        <script src="/theme/js/demo.min.js"></script>
-
         <!-- MAIN APP JS FILE -->
         <script src="/theme/js/app.min.js"></script>
 
         <!-- ENHANCEMENT PLUGINS : NOT A REQUIREMENT -->
         <!-- Voice command : plugin -->
-        <script src="/theme/js/speech/voicecommand.min.js"></script>
+        {{-- // <script src="/theme/js/speech/voicecommand.min.js"></script> --}}
 
         <!-- SmartChat UI : plugin -->
         <script src="js/smart-chat-ui/smart.chat.ui.min.js"></script>
@@ -84,12 +79,18 @@ if (!window.jQuery.ui) {
         <script src="/theme/js/plugin/flot/jquery.flot.tooltip.min.js"></script>
         
         <!-- Vector Maps Plugin: Vectormap engine, Vectormap language -->
-        <script src="/theme/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-        <script src="/theme/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+         {{-- <script src="/theme/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        // <script src="/theme/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script> --}}
         
         <!-- Full Calendar -->
         <script src="/theme/js/plugin/moment/moment.min.js"></script>
         <script src="/theme/js/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
+
+        <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();   
+        });
+        </script>
 
         <script>
         $(document).ready(function() {
@@ -156,169 +157,6 @@ if (!window.jQuery.ui) {
 
                 /*
                 * RUN PAGE GRAPHS
-                */
-
-                /* TAB 1: UPDATING CHART */
-                // For the demo we use generated data, but normally it would be coming from the server
-
-                var data = [], totalPoints = 200, $UpdatingChartColors = $("#updating-chart").css('color');
-
-                function getRandomData() {
-                    if (data.length > 0)
-                        data = data.slice(1);
-
-                    // do a random walk
-                    while (data.length < totalPoints) {
-                        var prev = data.length > 0 ? data[data.length - 1] : 50;
-                        var y = prev + Math.random() * 10 - 5;
-                        if (y < 0)
-                            y = 0;
-                        if (y > 100)
-                            y = 100;
-                        data.push(y);
-                    }
-
-                    // zip the generated y values with the x values
-                    var res = [];
-                    for (var i = 0; i < data.length; ++i)
-                        res.push([i, data[i]])
-                    return res;
-                }
-
-                // setup control widget
-                var updateInterval = 1500;
-                $("#updating-chart").val(updateInterval).change(function() {
-
-                    var v = $(this).val();
-                    if (v && !isNaN(+v)) {
-                        updateInterval = +v;
-                        $(this).val("" + updateInterval);
-                    }
-
-                });
-
-                // setup plot
-                var options = {
-                    yaxis : {
-                        min : 0,
-                        max : 100
-                    },
-                    xaxis : {
-                        min : 0,
-                        max : 100
-                    },
-                    colors : [$UpdatingChartColors],
-                    series : {
-                        lines : {
-                            lineWidth : 1,
-                            fill : true,
-                            fillColor : {
-                                colors : [{
-                                    opacity : 0.4
-                                }, {
-                                    opacity : 0
-                                }]
-                            },
-                            steps : false
-
-                        }
-                    }
-                };
-
-                var plot = $.plot($("#updating-chart"), [getRandomData()], options);
-
-                /* live switch */
-                $('input[type="checkbox"]#start_interval').click(function() {
-                    if ($(this).prop('checked')) {
-                        $on = true;
-                        updateInterval = 1500;
-                        update();
-                    } else {
-                        clearInterval(updateInterval);
-                        $on = false;
-                    }
-                });
-
-                function update() {
-                    if ($on == true) {
-                        plot.setData([getRandomData()]);
-                        plot.draw();
-                        setTimeout(update, updateInterval);
-
-                    } else {
-                        clearInterval(updateInterval)
-                    }
-
-                }
-
-                var $on = false;
-
-                /*end updating chart*/
-
-                /* TAB 2: Social Network  */
-
-                $(function() {
-                    // jQuery Flot Chart
-                    var twitter = [[1, 27], [2, 34], [3, 51], [4, 48], [5, 55], [6, 65], [7, 61], [8, 70], [9, 65], [10, 75], [11, 57], [12, 59], [13, 62]], facebook = [[1, 25], [2, 31], [3, 45], [4, 37], [5, 38], [6, 40], [7, 47], [8, 55], [9, 43], [10, 50], [11, 47], [12, 39], [13, 47]], data = [{
-                        label : "Twitter",
-                        data : twitter,
-                        lines : {
-                            show : true,
-                            lineWidth : 1,
-                            fill : true,
-                            fillColor : {
-                                colors : [{
-                                    opacity : 0.1
-                                }, {
-                                    opacity : 0.13
-                                }]
-                            }
-                        },
-                        points : {
-                            show : true
-                        }
-                    }, {
-                        label : "Facebook",
-                        data : facebook,
-                        lines : {
-                            show : true,
-                            lineWidth : 1,
-                            fill : true,
-                            fillColor : {
-                                colors : [{
-                                    opacity : 0.1
-                                }, {
-                                    opacity : 0.13
-                                }]
-                            }
-                        },
-                        points : {
-                            show : true
-                        }
-                    }];
-
-                    var options = {
-                        grid : {
-                            hoverable : true
-                        },
-                        colors : ["#568A89", "#3276B1"],
-                        tooltip : true,
-                        tooltipOpts : {
-                            //content : "Value <b>$x</b> Value <span>$y</span>",
-                            defaultTheme : false
-                        },
-                        xaxis : {
-                            ticks : [[1, "JAN"], [2, "FEB"], [3, "MAR"], [4, "APR"], [5, "MAY"], [6, "JUN"], [7, "JUL"], [8, "AUG"], [9, "SEP"], [10, "OCT"], [11, "NOV"], [12, "DEC"], [13, "JAN+1"]]
-                        },
-                        yaxes : {
-
-                        }
-                    };
-
-                    var plot3 = $.plot($("#statsChart"), data, options);
-                });
-
-                // END TAB 2
 
                 // TAB THREE GRAPH //
                 /* TAB 3: Revenew  */
@@ -591,16 +429,6 @@ $('.fc-toolbar .fc-right, .fc-toolbar .fc-center').hide();
                 });
 
                 /*
-                 * CHAT
-                 */
-
-                 $.filter_input = $('#filter-chat-list');
-                 $.chat_users_container = $('#chat-container > .chat-list-body')
-                 $.chat_users = $('#chat-users')
-                 $.chat_list_btn = $('#chat-container > .chat-list-open-close');
-                 $.chat_body = $('#chat-body');
-
-                /*
                 * LIST FILTER (CHAT)
                 */
 
@@ -647,19 +475,74 @@ $('.fc-toolbar .fc-right, .fc-toolbar .fc-center').hide();
 
 </script>
 
-<!-- Your GOOGLE ANALYTICS CODE Below -->
-<script type="text/javascript">
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
-_gaq.push(['_trackPageview']);
+{{-- Original Admin Scripts --}}
+    <script src="{{ asset ('/AdminTemplate/js/jquery.dataTables.min.js') }}"></script>
+    @stack('scripts')
 
-(function() {
-    var ga = document.createElement('script');
-    ga.type = 'text/javascript';
-    ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(ga, s);
-})();
+    <!-- Select Plugin Js -->
+    <script src="{{ asset ('/AdminTemplate/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
 
-</script>
+    <!-- Jquery CountTo Plugin Js -->
+    <script src="{{ asset ('/AdminTemplate/plugins/jquery-countto/jquery.countTo.js') }}"></script>
+    <!-- Slimscroll Plugin Js -->
+    <script src="{{ asset ('/AdminTemplate/plugins/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="{{ asset ('/AdminTemplate/plugins/node-waves/waves.js') }}"></script>
+
+    <!-- Jquery CountTo Plugin Js -->
+    <script src="{{ asset ('/AdminTemplate/plugins/jquery-countto/jquery.countTo.js') }}"></script>
+
+    <!-- Morris Plugin Js -->
+    <script src="{{ asset ('/AdminTemplate/plugins/raphael/raphael.min.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/plugins/morrisjs/morris.js') }}"></script>
+
+    <!-- ChartJs -->
+    <script src="{{ asset ('/AdminTemplate/plugins/chartjs/Chart.bundle.js') }}"></script>
+
+    <!-- Flot Charts Plugin Js -->
+    <script src="{{ asset ('/AdminTemplate/plugins/flot-charts/jquery.flot.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/plugins/flot-charts/jquery.flot.resize.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/plugins/flot-charts/jquery.flot.pie.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/plugins/flot-charts/jquery.flot.categories.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/plugins/flot-charts/jquery.flot.time.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/plugins/waitme/waitMe.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
+    <!-- Jquery Validation Plugin Css -->
+    <script src="{{ asset ('/AdminTemplate/plugins/jquery-validation/jquery.validate.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/js/bootstrap-filestyle.min.js') }}"></script>
+    
+
+    <!-- JQuery Steps Plugin Js -->
+    
+
+
+    <!-- Sparkline Chart Plugin Js -->
+    <script src="{{ asset ('/AdminTemplate/plugins/jquery-sparkline/jquery.sparkline.js') }}"></script>
+    
+
+
+    <!-- Custom Js -->
+    <script src="{{ asset ('/AdminTemplate/js/admin.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/js/bootbox.min.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/js/pages/cards/basic.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/js/pages/index.js') }}"></script>
+    <script src="{{ asset ('/AdminTemplate/js/pages/forms/basic-form-elements.js') }}"></script>
+    <!-- Dropzone Plugin Js -->
+    <script src="{{ asset ('/AdminTemplate/plugins/dropzone/dropzone.js') }}"></script>
+
+    <!-- Demo Js -->
+    <script src="{{ asset ('/AdminTemplate/js/demo.js') }}"></script>
+    <script>
+        $('.delete').submit(function(e) {
+            e.preventDefault();
+            var currentForm = this;
+            bootbox.confirm("Are you sure you want to delete this?", function(result) {
+                if (result) {
+                    currentForm.submit();
+                }
+            });
+        });
+    
+    </script>
+{{-- End Admin Scripts --}}

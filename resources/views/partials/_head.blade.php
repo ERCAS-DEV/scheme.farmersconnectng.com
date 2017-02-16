@@ -15,15 +15,9 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/theme/css/smartadmin-production.min.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/theme/css/smartadmin-skins.min.css">
 
-<!-- SmartAdmin RTL Support  -->
-<link rel="stylesheet" type="text/css" media="screen" href="/theme/css/smartadmin-rtl.min.css">
-
         <!-- We recommend you use "your_style.css" to override SmartAdmin
              specific styles this will also ensure you retrain your customization with each SmartAdmin update.
              <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
-
-             <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
-             <link rel="stylesheet" type="text/css" media="screen" href="/theme/css/demo.min.css">
 
              <!-- FAVICONS -->
              <link rel="shortcut icon" href="/theme/img/favicon/favicon.ico" type="image/x-icon">
@@ -47,3 +41,12 @@
         <link rel="apple-touch-startup-image" href="/theme/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
         <link rel="apple-touch-startup-image" href="/theme/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
         <link rel="apple-touch-startup-image" href="/theme/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
+    {{-- Link From Admin Template --}}
+
+    <!-- Datatable-->
+    <link href="{{ asset ('/AdminTemplate/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <!-- Custom Css -->
+    <link href="{{ asset ('/AdminTemplate/css/style.css') }}" rel="stylesheet">
+
+    {{-- Close --}}

@@ -11,20 +11,12 @@
 |
 */
 // Testing Temp Routes - Open
-Route::get('cf', function () {
-    return view('ib_tests.create_farmer');
-});
-
 Route::get('t4', function () {
     return view('my_test4');
 });
 
 Route::get('t3', function () {
     return view('my_test3');
-});
-
-Route::get('t1', function () {
-    return view('my_test');
 });
 
 // Close
